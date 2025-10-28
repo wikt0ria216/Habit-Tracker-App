@@ -1,0 +1,43 @@
+.sr-only {
+  position: absolute;
+
+  overflow: hidden;
+
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+
+  clip-path: inset(50%);
+}
+
+
+
+.anim-pulse {
+  animation: pulse var(--animation-duration-slow) ease infinite;
+}
+
+.anim-spin {
+  animation: spin var(--animation-duration-default) linear infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.8;
+  }
+
+  50% {
+    opacity: 0.4;
+  }
+
+  100% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

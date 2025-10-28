@@ -1,0 +1,9 @@
+.selector-error {
+  margin-top: var(--spacing-sml);
+  font-size: var(--text-xsm);
+  color: var(--text-danger);
+}
+
+.narrow-select {
+  width: 130px;
+}

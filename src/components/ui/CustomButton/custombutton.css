@@ -1,0 +1,150 @@
+/* Basic Styles */
+.btn {
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+
+  border: none;
+  border-radius: var(--radius-sml);
+
+  font-size: var(--text-med);
+  color: var(--text-primary);
+
+  background-color: transparent;
+}
+
+/* Text Align */
+.btn-content-align-left {
+  justify-content: flex-start;
+}
+
+.btn-content-align-center {
+  justify-content: center;
+}
+
+.btn-content-align-right {
+  justify-content: flex-end;
+}
+
+/* Icon Styles */
+.btn-icon {
+  margin-right: var(--spacing-sml);
+  color: var(--icon-secondary);
+}
+
+.btn-inverted .btn-icon {
+  color: var(--icon-primary);
+}
+
+.btn-accent .btn-icon,
+.btn-danger .btn-icon,
+.btn-icon-color-light {
+  color: var(--icon-white);
+}
+
+.btn.btn-icon-only .btn-icon {
+  margin: 0;
+}
+
+/* Button sizes */
+.btn.btn-sm {
+  padding: var(--spacing-xsm) var(--spacing-sml);
+  font-size: var(--text-sml);
+}
+
+.btn.btn-md {
+  padding: var(--spacing-med) var(--spacing-lrg);
+  font-size: var(--text-med);
+}
+
+.btn.btn-lg {
+  padding: var(--spacing-lrg) var(--spacing-xlg);
+  font-size: var(--text-lrg);
+}
+
+.btn.btn-sm.btn-icon-only {
+  padding: var(--spacing-xsm);
+}
+
+.btn.btn-md.btn-icon-only {
+  padding: var(--spacing-med);
+}
+
+.btn.btn-lg.btn-icon-only {
+  padding: var(--spacing-lrg);
+}
+
+/* button variants */
+
+/* primary */
+.btn-accent {
+  color: var(--text-white);
+  background-color: var(--btn-accent);
+}
+
+.btn-accent:hover {
+  background-color: var(--btn-accent-hover);
+}
+
+.btn-accent:active {
+  background-color: var(--btn-accent-active);
+}
+
+/* danger */
+
+.btn-danger {
+  color: var(--text-white);
+  background-color: var(--btn-danger);
+}
+
+.btn-danger:hover {
+  background-color: var(--btn-danger-hover);
+}
+
+.btn-danger:active {
+  background-color: var(--btn-danger-active);
+}
+
+.btn-secondary {
+  background-color: var(--btn-secondary);
+}
+
+.btn-secondary:hover {
+  background-color: var(--btn-secondary-hover);
+}
+
+.btn-secondary:active {
+  background-color: var(--btn-secondary-active);
+}
+
+/* ghost */
+
+.btn-ghost:hover {
+  background-color: var(--btn-ghost-hover);
+}
+
+.btn-ghost:active {
+  background-color: var(--btn-ghost-active);
+}
+
+.btn-ghost:hover .btn-icon,
+.btn-secondary:hover .btn-icon,
+.btn-transparent:hover .btn-icon {
+  color: var(--icon-inverted);
+}
+
+/* transparent */
+.btn-transparent {
+  background-color: transparent;
+}
+
+/* disabled btn */
+.btn[disabled] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.btn[disabled] .btn-icon {
+  opacity: 0.5;
+}

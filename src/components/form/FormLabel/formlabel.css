@@ -1,0 +1,19 @@
+.form-label {
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+
+  margin-bottom: var(--spacing-sml);
+
+  font-size: var(--text-sml);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+.form-label-optional {
+  margin-left: var(--spacing-sml);
+  font-size: var(--text-xsm);
+  font-weight: var(--font-weight-regular);
+  color: var(--text-secondary);
+}

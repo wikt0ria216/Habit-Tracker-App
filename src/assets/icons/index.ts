@@ -1,0 +1,16 @@
+export { FiPlus as Plus } from "react-icons/fi";
+export { FiEdit as Edit } from "react-icons/fi";
+export { FiTrash as Trash } from "react-icons/fi";
+export { IoEyeOffOutline as EyeOff } from "react-icons/io5";
+export { IoEyeOutline as Eye } from "react-icons/io5";
+export { IoClose as Close } from "react-icons/io5";
+export { IoMenu as Menu } from "react-icons/io5";
+export { IoLogOutOutline as LogOut } from "react-icons/io5";
+export { IoMoonOutline as Moon } from "react-icons/io5";
+export { IoSunnyOutline as Sunny } from "react-icons/io5";
+export { IoHomeOutline as Home } from "react-icons/io5";
+export { IoGridOutline as Grid } from "react-icons/io5";
+export { IoHeartOutline as Heart } from "react-icons/io5";
+export { BsThreeDotsVertical as ThreeDotsVertical } from "react-icons/bs";
+export { IoAlertCircleOutline as Alert } from "react-icons/io5";
+export { IoPersonSharp as PersonSharp } from "react-icons/io5";

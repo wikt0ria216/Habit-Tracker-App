@@ -1,0 +1,186 @@
+:root {
+  /* Backgrounds */
+  --bg-primary: var(--c-neutral-50);
+
+  /* smaller elements that appear on top of the main content of a website - tooltips, dropdowns */
+
+  --bg-popover: var(--c-neutral-0);
+
+  /* bigger elements that appoear on top of the main content of a website - dialogs, lightbox */
+
+  --bg-overlay: var(--c-neutral-0);
+  --bg-overlay-backdrop: var(--c-neutral-100a);
+  --bg-secondary: var(--c-neutral-0);
+  --bg-secondary-subtle: var(--c-neutral-150);
+  --bg-secondary-medium: var(--c-neutral-200);
+  --bg-secondary-strong: var(--c-neutral-250);
+  --bg-accent: var(--c-accent-600);
+  --bg-success: var(--c-success-600);
+  --bg-loader: var(--c-neutral-300);
+  --bg-separator: var(--border-default);
+  --bg-scrollbar-track: var(--c-neutral-350);
+  --bg-scrollbar-thumb: var(--c-neutral-600);
+
+  /* Buttons Back Grounds */
+
+  --btn-accent: var(--c-accent-600);
+  --btn-accent-hover: var(--c-accent-500);
+  --btn-accent-active: var(--c-accent-400);
+  --btn-secondary: var(--c-neutral-150);
+  --btn-secondary-hover: var(--c-neutral-200);
+  --btn-secondary-active: var(--c-neutral-250);
+  --btn-danger: var(--c-danger-600);
+  --btn-danger-hover: var(--c-danger-500);
+  --btn-danger-active: var(--c-danger-400);
+  --btn-ghost-hover: var(--c-neutral-150);
+  --btn-ghost-active: var(--c-neutral-200);
+
+  /* Borders Colors */
+
+  --border-accent: var(--c-accent-600);
+  --border-default: var(--c-neutral-300);
+  --border-strong: var(--c-neutral-400);
+  --border-danger: var(--c-danger-600);
+  --border-success: var(--c-success-600);
+  --border-light: var(--c-neutral-50);
+  --border-inverted: var(--c-neutral-1100);
+
+  /* Borders */
+
+  --border-thin-default: 1px solid var(--border-default);
+  --border-thick-primary: 2px solid var(--border-default);
+  --border-thin-strong: 1px solid var(--border-strong);
+  --border-thick-strong: 2px solid var(--border-intense);
+  --border-thin-accent: 1px solid var(--border-accent);
+  --border-thick-accent: 2px solid var(--border-accent);
+  --border-thin-danger: 1px solid var(--border-danger);
+  --border-thin-success: 1px solid var(--border-success);
+
+  /* Icons */
+  --icon-primary: var(--c-neutral-1400);
+  --icon-secondary: var(--c-neutral-800);
+  --icon-white: var(--c-neutral-50);
+  --icon-inverted: var(--c-neutral-1400);
+  --icon-danger: var(--c-danger-600);
+
+  /* Font Sizes */
+  --text-xsm: 0.75rem; /* 12px */
+  --text-sml: 0.875rem; /* 14px */
+  --text-med: 1rem; /* 16px */
+  --text-lrg: 1.25rem; /* 20px */
+  --text-xlg: 1.5rem; /* 24px */
+  --text-2xl: 1.75rem; /* 28px */
+  --text-3xl: 2.5rem; /* 40px */
+  --text-4xl: 4rem; /* 64px */
+
+  /* Spacings */
+  --spacing-xxs: 0.25rem; /* 4px */
+  --spacing-xsm: 0.375rem; /* 6px */
+  --spacing-sml: 0.5rem; /* 8px */
+  --spacing-med: 0.625rem; /* 10px */
+  --spacing-lrg: 0.75rem; /* 12px */
+  --spacing-xlg: 1rem; /* 16px */
+  --spacing-2xl: 1.5rem; /* 24px */
+  --spacing-3xl: 2rem; /* 32px */
+  --spacing-4xl: 2.5rem; /* 40px */
+
+  /* Radius */
+  --radius-xxs: 0.25rem; /* 4px */
+  --radius-xsm: 0.375rem; /* 6px */
+  --radius-sml: 0.5rem; /* 8px */
+  --radius-med: 0.625rem; /* 10px */
+  --radius-lrg: 0.75rem; /* 12px */
+  --radius-xlg: 1.25rem; /* 20px */
+  --radius-full: 50vw;
+
+  /* Text colors */
+  --text-accent: var(--c-accent-600);
+  --text-primary: var(--c-neutral-1400);
+  --text-secondary: var(--c-neutral-800);
+  --text-success: var(--c-success-500);
+  --text-danger: var(--c-danger-600);
+  --text-white: var(--c-neutral-0);
+  --text-black: var(--c-neutral-1000);
+  --text-inverted: var(--c-neutral-1400);
+
+  /* Transitions */
+
+  --transition-duration-quick: 0.2s;
+  --transition-duration-default: 0.3s;
+  --transition-duration-slow: 1s;
+  --transition-timing-function-default: ease;
+  --transition-quick: var(--transition-duration-quick) var(--transition-timing-function-default);
+  --transition-default: var(--transition-duration-default) var(--transition-timing-function-default);
+  --transition-slow: var(--transition-duration-slow) var(--transition-timing-function-default);
+
+  /* Box shadows */
+  --box-shadow-sml: 0 1px 2px 0 #0000000d;
+  --box-shadow-med: 0 4px 6px -1px #0000001a;
+  --box-shadow-lrg: 0 10px 15px -3px #0000001a;
+
+  /* Animations */
+  --animation-duration-quick: 0.3s;
+  --animation-duration-default: 1s;
+  --animation-duration-slow: 1.5s;
+
+  /* Font weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 800;
+
+  /* z-index */
+  --z-index-deep: -9999;
+  --z-index-dropdown: 100;
+  --z-index-fixed: 200;
+  --z-index-sidebar-overlay: 400;
+  --z-index-sidebar: 500;
+  --z-index-modal-overlay: 600;
+  --z-index-modal: 700;
+}
+
+.theme-dark {
+  --bg-primary: var(--c-neutral-50);
+  --bg-popover: var(--c-neutral-150);
+  --bg-overlay: var(--c-neutral-100);
+  --bg-secondary: var(--c-neutral-100);
+  --bg-secondary-subtle: var(--c-neutral-200);
+  --bg-secondary-medium: var(--c-neutral-250);
+  --bg-secondary-strong: var(--c-neutral-300);
+  --bg-loader: var(--c-neutral-300);
+  --bg-separator: var(--border-default);
+  --bg-scrollbar-track: var(--c-neutral-250);
+  --bg-scrollbar-thumb: var(--c-neutral-700);
+
+  /* button colors */
+  --btn-secondary: var(--c-neutral-200);
+  --btn-secondary-hover: var(--c-neutral-250);
+  --btn-secondary-active: var(--c-neutral-300);
+  --btn-ghost-hover: var(--c-neutral-200);
+  --btn-ghost-active: var(--c-neutral-250);
+
+  /* Borders Colors */
+  --border-default: var(--c-neutral-250);
+  --border-intense: var(--c-neutral-400);
+  --border-light: var(--c-neutral-1100);
+  --border-inverted: var(--c-neutral-1100);
+
+  /* Borders */
+
+  --border-thin-default: 1px solid var(--border-default);
+  --border-thick-default: 2px solid var(--border-default);
+  --border-thin-strong: 1px solid var(--border-strong);
+  --border-thick-strong: 2px solid var(--border-strong);
+
+  /* Icons */
+  --icon-primary: var(--c-neutral-600);
+  --icon-secondary: var(--c-neutral-1000);
+  --icon-white: var(--c-neutral-1100);
+  --icon-inverted: var(--c-neutral-1100);
+
+  /* Text Colors */
+  --text-primary: var(--c-neutral-1100);
+  --text-secondary: var(--c-neutral-1000);
+  --text-inverted: var(--c-neutral-1100);
+  --text-white: var(--c-neutral-1100);
+  --text-black: var(--c-neutral-0);
+}

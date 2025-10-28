@@ -1,0 +1,30 @@
+*,
+*::after,
+*::before {
+  font-family: Roboto, sans-serif;
+  transition: color var(--transition-default), border-color var(--transition-default),
+    background-color var(--transition-default), box-shadow var(--transition-default),
+    transform var(--transition-default), opacity var(--transition-default);
+}
+
+
+body {
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+}
+
+::-webkit-scrollbar {
+  scroll-behavior: smooth;
+  width: 14px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border: 4px solid #0000;
+  border-radius: var(--radius-med);
+  background-color: var(--bg-scrollbar-thumb);
+  background-clip: padding-box;
+}

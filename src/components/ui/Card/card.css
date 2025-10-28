@@ -1,0 +1,26 @@
+.card {
+  overflow: hidden;
+
+  padding: var(--spacing-2xl);
+  border: var(--border-thin-default);
+  border-radius: var(--radius-xlg);
+
+  background-color: var(--bg-secondary);
+}
+
+.card-header {
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: var(--spacing-xlg);
+}
+
+.card-body {
+  overflow: hidden; /* Prevents the content from spilling out */
+  display: flex;
+  flex: 1; /* Takes up all free space */
+  flex-direction: column;
+}

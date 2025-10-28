@@ -1,0 +1,73 @@
+.modal-backdrop {
+  position: fixed;
+  z-index: var(--z-index-modal-overlay);
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  opacity: 0;
+  background-color: var(--bg-overlay-backdrop);
+}
+
+.modal {
+  position: fixed;
+  z-index: var(--z-index-modal);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  max-width: calc(100% - 2.5rem);
+  height: auto;
+  max-height: calc(100vh - 2.5rem);
+  padding: var(--spacing-2xl);
+  border: var(--border-thin-default);
+  border-radius: var(--radius-xlg);
+
+  opacity: 0;
+  background-color: var(--bg-overlay);
+
+  transition: transform var(--transition-quick), opacity var(--transition-quick);
+}
+
+.modal.visible.in {
+  transform: translate(-50%, -50%);
+  opacity: 1;
+}
+
+.modal-backdrop.visible.in {
+  opacity: 1;
+}
+
+.modal-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-xlg);
+}
+
+.modal-body {
+  overflow-y: auto;
+  flex: 1;
+  max-height: calc(80vh - 3.25rem - 3rem);
+}
+
+.modal-actions {
+  display: flex;
+  gap: var(--spacing-xlg);
+  align-items: center;
+  align-self: flex-end;
+
+  margin-top: var(--spacing-2xl);
+}
+
+@media (width >= 1024px) {
+  .modal {
+    min-width: 400px;
+    max-width: 640px;
+  }
+}

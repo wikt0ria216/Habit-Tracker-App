@@ -1,0 +1,15 @@
+.modal-delete-title,
+.modal-delete-text {
+  text-align: center;
+}
+
+.modal-delete-title {
+  margin-bottom: var(--spacing-sml);
+  font-size: var(--text-lrg);
+  text-align: center;
+}
+
+.modal-delete-text {
+  color: var(--text-secondary);
+  text-align: center;
+}

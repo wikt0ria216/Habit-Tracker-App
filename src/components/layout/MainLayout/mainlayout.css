@@ -1,0 +1,20 @@
+.main-layout {
+  display: flex;
+}
+
+.content {
+  flex: 1;
+  padding: var(--spacing-xlg);
+}
+
+@media (width >= 768px) {
+  .content {
+    padding: var(--spacing-2xl);
+  }
+}
+
+@media (width >= 1280px) {
+  .content {
+    margin-left: 288px;
+  }
+}

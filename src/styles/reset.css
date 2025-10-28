@@ -1,0 +1,54 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Prevents font size inflation  - stops the browser from making the font automatically bigger on mobile devices */
+html {
+  text-size-adjust: none;
+}
+
+li,
+ol {
+  list-style: none;
+}
+
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+picture {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+svg {
+  display: block;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* :focus {
+  outline: none; 
+}
+
+:focus-visible {
+  outline: var(--border-thin-primary);
+  outline-offset: 1px;
+}
+
+
+:focus:not(:focus-visible) {
+  outline: none; 
+} */

@@ -1,0 +1,12 @@
+.data-skeleton {
+  width: 100%;
+  height: 80px;
+  margin-bottom: var(--spacing-med);
+  border-radius: var(--radius-lrg);
+
+  background-color: var(--bg-loader);
+}
+
+.data-skeleton:last-child {
+  margin-bottom: 0;
+}

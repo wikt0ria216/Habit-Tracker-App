@@ -1,0 +1,57 @@
+.daypicker-days-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xlg);
+  align-items: center;
+
+  margin-top: var(--spacing-xlg);
+}
+
+.daypicker.daypicker-center .daypicker-days-list {
+  max-width: 350px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.daypicker-day-label {
+  cursor: pointer;
+  display: block;
+}
+
+.day-checkbox {
+  position: absolute;
+  left: -9999px; /* Przesuwamy poza ekran, ale zachowujemy dostępność */
+}
+
+.daypicker-custom-checkbox {
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 36px;
+  min-height: 36px;
+  padding: 0 var(--spacing-sml);
+  border: var(--border-thin-default);
+  border-radius: var(--radius-sml);
+
+  font-size: var(--text-sml);
+  color: var(--text-primary);
+  text-align: center;
+}
+
+.daypicker-custom-checkbox.checked {
+  border-color: var(--bg-accent);
+  color: var(--text-white);
+  background-color: var(--bg-accent);
+}
+
+.daypicker-custom-checkbox.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.day-checkbox:focus-visible + .daypicker-custom-checkbox {
+  outline: 2px solid white;
+}

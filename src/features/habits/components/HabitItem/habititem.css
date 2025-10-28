@@ -1,0 +1,54 @@
+.habit-item {
+  position: relative;
+
+  display: flex;
+  gap: var(--spacing-xlg);
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+}
+
+.habit-item-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.habit-item-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--spacing-sml);
+  font-weight: var(--font-weight-medium);
+}
+
+.habit-item-header.no-areas {
+  margin-bottom: 0;
+}
+
+.habit-item-name {
+  color: var(--text-primary);
+}
+
+.habit-item.completed .habit-item-name {
+  color: var(--text-secondary);
+  text-decoration: line-through;
+}
+
+.habit-item-right {
+  display: flex;
+  gap: var(--spacing-sml);
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.checkbox-container {
+  position: relative; /* Zapewnia, że spinner i checkbox są w tej samej pozycji */
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 24px; 
+  height: 24px;
+}

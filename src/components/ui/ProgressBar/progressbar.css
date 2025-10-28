@@ -1,0 +1,45 @@
+.circular-progress-bar {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: auto;
+}
+
+.circular-progress-bar-track,
+.circular-progress-bar-progress {
+  transition: stroke-dashoffset var(--transition-slow), stroke var(--transition-default); /* Progress animation */
+}
+
+.circular-progress-bar-details {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  text-align: center;
+}
+
+.circular-progress-bar-status {
+  display: flex;
+  gap: var(--spacing-xlg);
+  justify-content: center;
+}
+
+.status-indicator {
+  display: flex;
+  gap: var(--spacing-sml);
+  align-items: center;
+}
+
+.status-indicator svg circle {
+  transition: fill var(--transition-default);
+}
+
+.status-indicator-label {
+  font-size: var(--text-sml);
+  color: var(--text-secondary);
+}

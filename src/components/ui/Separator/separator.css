@@ -1,0 +1,37 @@
+.separator {
+  background-color: var(--bg-separator);
+}
+
+.separator-horizontal.separator-thin {
+  height: 1px;
+}
+
+.separator-horizontal.separator-medium {
+  height: 2px;
+}
+
+.separator-horizontal.separator-thick {
+  height: 3px;
+}
+
+.separator.separator-horizontal {
+  width: 100%;
+  margin: var(--spacing-xlg) 0;
+}
+
+.separator-vertical.separator-thin {
+  width: 1px;
+}
+
+.separator-vertical.separator-medium {
+  width: 2px;
+}
+
+.separator-vertical.separator-thick {
+  width: 3px;
+}
+
+.separator.separator-vertical {
+  height: 100%;
+  margin: 0 var(--spacing-med);
+}
