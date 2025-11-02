@@ -15,6 +15,7 @@ interface CustomButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: ReactNode;
   variant?: VariantType;
   size?: SizeType;
+  type?: "submit" | "reset" | "button";
   textAlign?: TextAlignType;
   isDisabled?: boolean;
   isLoading?: boolean;
@@ -38,6 +39,7 @@ const CustomButton = forwardRef<HTMLButtonElement, CustomButtonProps>(
       isLoading,
       className,
       ariaLabel,
+      type = "button",
       ariaControls,
       ariaExpanded,
       ariaHasPopup,
@@ -61,6 +63,7 @@ const CustomButton = forwardRef<HTMLButtonElement, CustomButtonProps>(
         className={buttonClasses}
         onClick={onClick}
         ref={ref}
+        type={type}
         aria-disabled={isDisabled || isLoading}
         aria-label={ariaLabel}
         aria-expanded={ariaExpanded}
