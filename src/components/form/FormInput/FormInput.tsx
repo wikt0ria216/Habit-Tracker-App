@@ -16,6 +16,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   icon?: ReactNode;
   onIconClick?: () => void;
   isOptional?: boolean;
+  isDisabled?: boolean;
   isRequired?: boolean;
   iconAriaLabel?: string;
 }
@@ -33,6 +34,7 @@ const FormInput = forwardRef<HTMLInputElement, InputProps>(
       iconAriaLabel,
       isRequired = false,
       isOptional = false,
+      isDisabled = false,
       id,
       ...rest
     },
@@ -72,6 +74,7 @@ const FormInput = forwardRef<HTMLInputElement, InputProps>(
             type={type}
             className={inputClass}
             id={id}
+            disabled={isDisabled}
             placeholder={placeholder}
             aria-describedby={error ? `${id}-error` : undefined}
             aria-invalid={error ? "true" : "false"}

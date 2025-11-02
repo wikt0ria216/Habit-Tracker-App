@@ -50,3 +50,7 @@
 .form-input.form-input-error:focus {
   border: var(--border-thin-accent);
 }
+
+.form-input:disabled {
+  opacity: .65;
+}
