@@ -7,7 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import CustomButton from "@/components/ui/CustomButton/CustomButton";
 import FormInput from "@/components/form/FormInput/FormInput";
 import { useGetUser } from "@/features/user/hooks/useGetUser";
-import { useUpdateUser } from "@/features/user/hooks/useUpdateUser";
+import { useUpdateProfile } from "@/features/user/hooks/useUpdateProfile";
 import ProfileSkeleton from "@/features/user/components/ProfileSkeleton/ProfileSkeleton";
 import ProfileError from "@/features/user/components/ProfileError/ProfileError";
 
@@ -59,7 +59,7 @@ const ProfilePage = () => {
 
   const { data: userProfile, refetch, isError, isLoading } = useGetUser();
 
-  const updateProfileMutation = useUpdateUser();
+  const updateProfileMutation = useUpdateProfile();
 
   const avatarWatch = watch("avatar");
 

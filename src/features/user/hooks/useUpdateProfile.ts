@@ -9,7 +9,7 @@ interface UpdateProfileData {
   avatar?: File;
 }
 
-const updateUser = async (data: UpdateProfileData): Promise<User | undefined> => {
+const updateProfile = async (data: UpdateProfileData): Promise<User | undefined> => {
   const {
     data: { user },
     error: authError,
@@ -73,11 +73,11 @@ const updateUser = async (data: UpdateProfileData): Promise<User | undefined> =>
   }
 };
 
-export const useUpdateUser = () => {
+export const useUpdateProfile = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: updateUser,
+    mutationFn: updateProfile,
     onSuccess: (data) => {
       if (data) {
         queryClient.setQueryData(["user"], data);
