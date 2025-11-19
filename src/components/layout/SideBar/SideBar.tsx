@@ -6,7 +6,7 @@ import { useLogout } from "@/features/authentication/hooks/useLogout";
 
 import CustomButton from "@ui/CustomButton/CustomButton";
 
-import { Menu, LogOut, Moon, Sunny, Home, Grid, Heart } from "@/assets/icons";
+import { Menu, LogOut, Moon, Sunny, Home, Grid, Heart, Person } from "@/assets/icons";
 
 import "./sidebar.css";
 import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
@@ -38,6 +38,7 @@ const SideBar = () => {
     { id: "home", to: "/", label: "Home", icon: <Home size={20} /> },
     { id: "areas", to: "/areas", label: "Areas", icon: <Grid size={20} /> },
     { id: "habits", to: "/habits", label: "Habits", icon: <Heart size={20} /> },
+    { id: "profile", to: "/profile", label: "My Profile", icon: <Person size={20} /> },
   ];
 
   return (

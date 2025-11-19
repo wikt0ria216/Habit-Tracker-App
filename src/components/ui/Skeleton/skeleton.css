@@ -1,0 +1,19 @@
+.skeleton {
+  background-color: var(--bg-loader);
+}
+
+.skeleton-circular {
+  border-radius: var(--radius-full);
+}
+
+.skeleton-rectangular {
+  border-radius: 0;
+}
+
+.skeleton-rounded {
+  border-radius: var(--radius-sml);
+}
+
+.skeleton-text {
+  border-radius: var(--radius-xxs);
+}

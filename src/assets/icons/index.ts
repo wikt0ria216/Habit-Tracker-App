@@ -14,3 +14,6 @@ export { IoHeartOutline as Heart } from "react-icons/io5";
 export { BsThreeDotsVertical as ThreeDotsVertical } from "react-icons/bs";
 export { IoAlertCircleOutline as Alert } from "react-icons/io5";
 export { IoPersonSharp as PersonSharp } from "react-icons/io5";
+export { FiRefreshCw as RefreshCw } from "react-icons/fi";
+export { IoPersonOutline as Person } from "react-icons/io5";
+export { IoAlertCircleOutline as AlertCircle } from "react-icons/io5";
