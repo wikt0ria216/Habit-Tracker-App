@@ -1,0 +1,13 @@
+.user-info-skeleton {
+  display: flex;
+  gap: var(--spacing-lrg);
+  align-items: center;
+  width: 100%;
+}
+
+.user-info-skeleton-details {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--spacing-sml);
+}

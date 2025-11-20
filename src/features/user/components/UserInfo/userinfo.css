@@ -1,0 +1,52 @@
+.user-info {
+  display: flex;
+  flex: 1;
+  gap: var(--spacing-lrg);
+  align-items: center;
+}
+
+.user-info-avatar img {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  object-fit: cover;
+}
+
+.user-info-details {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--spacing-xxs);
+}
+
+.user-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.user-info-actions {
+  display: flex;
+  gap: var(--spacing-sml);
+  align-items: center;
+}
+
+.user-info-username {
+  font-size: var(--text-med);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+.user-info-email {
+  font-size: var(--text-sml);
+  color: var(--text-secondary);
+}
+
+.user-info-stale-indicator {
+  cursor: pointer;
+  display: block;
+}
+
+.user-info-warning-icon {
+  color: var(--icon-warning);
+}
