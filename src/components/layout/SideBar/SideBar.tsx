@@ -13,10 +13,13 @@ import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
 import useFocusTrap from "@/hooks/useFocusTrap";
 import { useEscapeKey } from "@/hooks/useEscapeKey";
 import Separator from "@/components/ui/Separator/Separator";
-import { useAuthContext } from "@/features/authentication/hooks/useAuthContext";
+import UserInfo from "@/features/user/components/UserInfo/UserInfo";
+import UserInfoError from "@/features/user/components/UserInfoError/UserInfoError";
+import UserInfoSkeleton from "@/features/user/components/UserInfoSkeleton/UserInfoSkeleton";
+import { useGetUser } from "@/features/user/hooks/useGetUser";
 
 const SideBar = () => {
-  const { user } = useAuthContext();
+  const { data: userData, isError, isLoading, refetch } = useGetUser();
 
   const { theme, toggleTheme } = useThemeContext();
 
@@ -98,19 +101,18 @@ const SideBar = () => {
         <Separator />
 
         <section className="sidebar-user-container" aria-label="User information">
-          <div className="sidebar-user">
-            <img
-              src="/user-img.png"
-              className="sidebar-user-img"
-              alt={`Profile photo of ${user?.user_metadata.firstname} ${user?.user_metadata.lastname}`}
+          {isLoading ? (
+            <UserInfoSkeleton />
+          ) : isError ? (
+            <UserInfoError onRetry={refetch} />
+          ) : (
+            <UserInfo
+              avatarUrl={userData?.avatar_url}
+              firstName={userData?.first_name}
+              lastName={userData?.last_name}
+              email={userData?.email}
             />
-            <div className="sidebar-user-info">
-              <p className="sidebar-user-name">
-                {`${user?.user_metadata.firstname}  ${user?.user_metadata.lastname}`}{" "}
-              </p>
-              <p className="sidebar-user-mail">{user?.email}</p>
-            </div>
-          </div>
+          )}
         </section>
       </nav>
       <div className={`sidebar-overlay ${isSideBarOpen ? "open" : ""}`} onClick={closeSideBar}></div>
