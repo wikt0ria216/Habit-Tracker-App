@@ -88,30 +88,6 @@
   gap: var(--spacing-sml);
 }
 
-.sidebar-user {
-  display: flex;
-  gap: var(--spacing-lrg);
-  align-items: center;
-}
-
-.sidebar-user-img {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-full);
-}
-
-.sidebar-user-name {
-  margin-bottom: var(--spacing-xxs);
-  font-size: var(--text-sml);
-  font-weight: var(--font-weight-medium);
-  color: var(--text-primary);
-}
-
-.sidebar-user-mail {
-  font-size: var(--text-sml);
-  color: var(--text-secondary);
-}
-
 .sidebar-overlay {
   pointer-events: none;
 
