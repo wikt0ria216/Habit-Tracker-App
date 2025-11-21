@@ -21,6 +21,6 @@
 }
 
 .area-item-count {
-  font-size: var(--text-size-sml);
+  font-size: var(--text-sml);
   color: var(--text-secondary);
 }
