@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import "./skeleton.css";
-interface SkeletonProps {
+export interface SkeletonProps {
   className?: string;
   variant?: "circular" | "rectangular" | "rounded" | "text";
   width?: string | number;
