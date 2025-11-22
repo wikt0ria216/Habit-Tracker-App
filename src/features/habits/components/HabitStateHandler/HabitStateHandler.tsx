@@ -28,7 +28,6 @@ const HabitStateHandler = ({
       isLoading={isLoading}
       isError={isError}
       data={habits}
-      skeletonCount={5}
       emptyMessage={emptyMessage}
       errorMessage={errorMessage ? errorMessage : "Failed to load habits. Try again later."}
       centered
