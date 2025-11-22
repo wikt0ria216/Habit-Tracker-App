@@ -1,9 +1,8 @@
 import { ReactNode } from "react";
-
-import DataSkeleton from "@/components/ui/DataSkeleton/DataSkeleton";
-
 import "./statehandler.css";
 import CustomButton from "../CustomButton/CustomButton";
+import { SkeletonProps } from "../Skeleton/Skeleton";
+import SkeletonList from "../SkeletonList/SkeletonList";
 
 interface StateHandler<T> {
   isLoading: boolean;
@@ -12,6 +11,8 @@ interface StateHandler<T> {
   emptyMessage?: string | JSX.Element | null;
   errorMessage?: string | JSX.Element;
   skeletonCount?: number;
+  skeletonProps?: Omit<SkeletonProps, "isSingle" | "loadingMessage">;
+  skeletonGap?: string | number;
   children: ReactNode;
   centered?: boolean;
   loadingLabel?: string;
@@ -24,7 +25,9 @@ const StateHandler = <T,>({
   data,
   emptyMessage,
   errorMessage,
-  skeletonCount,
+  skeletonCount = 5,
+  skeletonProps = { height: 60, variant: "rounded" },
+  skeletonGap = 16,
   retry,
   children,
   loadingLabel = "Loading",
@@ -32,7 +35,18 @@ const StateHandler = <T,>({
 }: StateHandler<T>) => {
   if (isLoading) {
     //if the state is loading then display skeleton
-    return <>{<DataSkeleton times={skeletonCount} ariaLabel={loadingLabel} />}</>;
+    return (
+      <>
+        {
+          <SkeletonList
+            count={skeletonCount}
+            loadingMessage={loadingLabel}
+            skeletonProps={skeletonProps}
+            gap={skeletonGap}
+          />
+        }
+      </>
+    );
   }
   if (isError) {
     //any error with the API - render error message

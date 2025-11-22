@@ -31,7 +31,6 @@ const AreaStateHandler = ({
       centered
       emptyMessage={emptyMessage}
       errorMessage={errorMessage ? errorMessage : "Failed to load areas. Try again later."}
-      skeletonCount={5}
       loadingLabel={loadingLoader}
       retry={retry}
     >
