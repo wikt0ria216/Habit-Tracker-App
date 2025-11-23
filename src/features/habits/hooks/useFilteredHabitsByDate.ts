@@ -1,6 +1,6 @@
 import { Habit } from "@/types/Habit";
 import { useMemo } from "react";
-import { daysOfWeek } from "@/utils/daysUtils";
+import { jsWeekDays } from "@/utils/daysUtils";
 
 interface useFilteredHabitsByDateProps {
   habits: Habit[] | undefined;
@@ -8,15 +8,15 @@ interface useFilteredHabitsByDateProps {
 }
 
 export const useFilteredHabitsByDate = ({ habits, dateOption }: useFilteredHabitsByDateProps) => {
-  const today = new Date();
-  const tomorrow = new Date(today);
-  tomorrow.setDate(tomorrow.getDate() + 1);
-
-  const date = dateOption === "today" ? today : tomorrow;
-  const dayOfWeek = daysOfWeek[date.getDay()];
-  const dayOfMonth = String(date.getDate());
-
   const filteredHabits = useMemo(() => {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    const date = dateOption === "today" ? today : tomorrow;
+    const dayOfWeek = jsWeekDays[date.getDay()];
+    const dayOfMonth = String(date.getDate());
+
     return habits?.filter((habit) => {
       const { frequency, days } = habit;
 
@@ -32,7 +32,7 @@ export const useFilteredHabitsByDate = ({ habits, dateOption }: useFilteredHabit
         return false;
       }
     });
-  }, [dayOfMonth, dayOfWeek, habits]);
+  }, [dateOption, habits]);
 
   return { filteredHabits };
 };

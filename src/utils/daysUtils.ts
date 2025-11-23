@@ -1,5 +1,7 @@
 export const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
+export const jsWeekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
 export const daysOfMonth = Array.from({ length: 31 }, (_, i) => String(i + 1));
 
 export const dayFullNames: { [key: string]: string } = {
