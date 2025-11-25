@@ -39,7 +39,9 @@ const AuthForm = ({
         <form onSubmit={onSubmit} className="auth-form" {...rest}>
           {children}
           <div className="auth-form-actions">
-            <CustomButton isLoading={isButtonLoading}>{buttonText}</CustomButton>
+            <CustomButton isLoading={isButtonLoading} type="submit">
+              {buttonText}
+            </CustomButton>
           </div>
         </form>
         <div className="auth-form-footer">
