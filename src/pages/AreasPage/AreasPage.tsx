@@ -22,7 +22,7 @@ const AreasPage = () => {
           New Area
         </CustomButton>
       </PageHeader>
-      <Card ariaLabel="card-title-areas">
+      <Card ariaLabel="Your Areas">
         <AreaStateHandler
           isLoading={areasIsLoading}
           isError={areasIsError}
