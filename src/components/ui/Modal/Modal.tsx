@@ -1,4 +1,4 @@
-import { ReactNode, useRef } from "react";
+import { ReactNode, useId, useRef } from "react";
 import { createPortal } from "react-dom";
 
 import CustomButton from "@ui//CustomButton/CustomButton";
@@ -13,7 +13,7 @@ import { useEscapeKey } from "@/hooks/useEscapeKey";
 
 interface ModalProps {
   children: ReactNode;
-  title?: string;
+  title: string;
   onClose: () => void;
   isModalOpen: boolean;
   actions?: ReactNode;
@@ -26,7 +26,9 @@ const Modal = ({ children, title, onClose, isModalOpen, actions }: ModalProps) =
   useLockBodyScroll(isModalOpen);
   useEscapeKey({ callback: onClose });
 
-  const titleId = `modal-title-${title?.replace(/\s+/g, "-").toLowerCase()}`;
+  const id = useId();
+
+  const titleId = `${id}-modal-title`;
 
   return createPortal(
     <>
@@ -57,6 +59,7 @@ const Modal = ({ children, title, onClose, isModalOpen, actions }: ModalProps) =
           <div
             className={`modal-backdrop ${isModalOpen ? "visible" : ""} ${hasModalTransitionedIn ? "in" : ""}`}
             onClick={onClose}
+            aria-hidden="true"
           ></div>
         </>
       )}
