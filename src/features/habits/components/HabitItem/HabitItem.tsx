@@ -69,24 +69,12 @@ const HabitItem = forwardRef<HTMLDivElement, HabitItemProps>(
       completeHabit({ habitId: id, isCompleted: !isCompleted });
     };
 
-    const uniquePrefix = Date.now();
-    const habitItemId = `habit-item-${id}-${name.replace(/\s+/g, "-").toLowerCase()}`;
-    const areasListId = `areas-list-${id}-${name.replace(/\s+/g, "-").toLowerCase()}`;
-
     if (isReadOnly) {
       return (
-        <div
-          className="habit-item"
-          ref={ref}
-          role="region"
-          tabIndex={0}
-          aria-labelledby={areas.length > 0 ? `${habitItemId} ${areasListId}` : habitItemId}
-        >
+        <div className="habit-item" ref={ref}>
           <div className="habit-item-left">
             <div className={`habit-item-header ${areas.length === 0 ? "no-areas" : ""}`}>
-              <h3 className="habit-item-name" id={habitItemId}>
-                {name}
-              </h3>
+              <h3 className="habit-item-name">{name}</h3>
             </div>
             {areas.length > 0 && <TagList tags={areas} ariaLabel={`Areas for ${name}`} />}
           </div>
@@ -95,18 +83,10 @@ const HabitItem = forwardRef<HTMLDivElement, HabitItemProps>(
     }
 
     return (
-      <div
-        className={`habit-item ${!isReadOnly && isCompleted && !ignoreCompletedStyle ? "completed" : ""}`}
-        ref={ref}
-        role="region"
-        tabIndex={0}
-        aria-labelledby={areas.length > 0 ? `${habitItemId} ${areasListId}` : habitItemId}
-      >
+      <div className={`habit-item ${!isReadOnly && isCompleted && !ignoreCompletedStyle ? "completed" : ""}`} ref={ref}>
         <div className="habit-item-left">
           <div className={`habit-item-header ${areas.length === 0 ? "no-areas" : ""}`}>
-            <h3 className="habit-item-name" id={habitItemId}>
-              {name}
-            </h3>
+            <h3 className="habit-item-name">{name}</h3>
           </div>
           {areas.length > 0 && <TagList tags={areas} ariaLabel={`Areas for ${name}`} />}
         </div>
@@ -116,10 +96,10 @@ const HabitItem = forwardRef<HTMLDivElement, HabitItemProps>(
             {showCheckbox && (
               <div className="checkbox-container">
                 {isCompleting ? (
-                  <Spinner variant="secondary" size="sml" ariaLabel={`Loading the completion of ${name} habit`} />
+                  <Spinner variant="secondary" size="sml" ariaLabel={`Loading completion of ${name} habit`} />
                 ) : (
                   <CustomCheckbox
-                    id={`habit-checkbox-${uniquePrefix}-${id}`}
+                    id={`habit-checkbox-${id}`}
                     checked={isCompleted}
                     onChange={handleToggleComplete}
                     ariaLabel={`Toggle completion for ${name} habit`}
