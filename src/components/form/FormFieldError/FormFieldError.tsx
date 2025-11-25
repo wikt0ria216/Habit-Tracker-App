@@ -6,7 +6,7 @@ interface FormFieldError {
 
 const FormFieldError = ({ error, id }: FormFieldError) => {
   return (
-    <span className="form-field-error" id={`${id}-error`}>
+    <span className="form-field-error" id={id}>
       {error}
     </span>
   );
