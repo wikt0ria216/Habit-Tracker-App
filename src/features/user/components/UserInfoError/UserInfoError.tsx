@@ -9,7 +9,7 @@ interface UserInfoErrorProps {
 
 const UserInfoError = ({ onRetry, message = "Failed to load user info" }: UserInfoErrorProps) => {
   return (
-    <div className="user-info-error" role="alert" aria-live="assertive">
+    <div className="user-info-error" role="status" aria-live="polite">
       <div className="user-info-error-icon" aria-hidden="true">
         <AlertCircle size={24} />
       </div>
