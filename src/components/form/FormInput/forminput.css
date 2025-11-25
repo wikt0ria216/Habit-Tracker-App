@@ -10,9 +10,13 @@
   right: var(--spacing-lrg);
   transform: translateY(-50%);
 
-  display: block;
+  padding: 0;
+  border: none;
 
-  color: var(--text-secondary);
+  font: inherit;
+  color: var(--icon-secondary);
+
+  background-color: transparent;
 }
 
 .form-input {
@@ -52,5 +56,5 @@
 }
 
 .form-input:disabled {
-  opacity: .65;
+  opacity: 0.65;
 }

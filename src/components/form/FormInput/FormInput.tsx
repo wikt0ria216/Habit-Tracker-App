@@ -48,24 +48,19 @@ const FormInput = forwardRef<HTMLInputElement, InputProps>(
       className
     );
 
+    const errorId = `${id}-error`;
+
     return (
       <div className="form-input-container">
         {label && <FormLabel htmlFor={id} label={label} isOptional={isOptional} />}
         <div className="form-input-wrapper">
-          {icon && (
-            <span
-              className="form-input-icon"
-              onClick={onIconClick}
-              role="button"
-              tabIndex={0}
-              aria-label={iconAriaLabel}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  onIconClick?.();
-                }
-              }}
-            >
+          {icon && onIconClick && (
+            <button className="form-input-icon" aria-label={iconAriaLabel} onClick={onIconClick} type="button">
+              {icon}
+            </button>
+          )}
+          {icon && !onIconClick && (
+            <span className="form-input-icon" aria-hidden="true">
               {icon}
             </span>
           )}
@@ -76,13 +71,13 @@ const FormInput = forwardRef<HTMLInputElement, InputProps>(
             id={id}
             disabled={isDisabled}
             placeholder={placeholder}
-            aria-describedby={error ? `${id}-error` : undefined}
-            aria-invalid={error ? "true" : "false"}
+            aria-describedby={error ? errorId : undefined}
+            aria-invalid={!!error}
             aria-required={isRequired}
             {...rest}
           />
         </div>
-        {error && <FormFieldError id={id} error={error} />}
+        {error && <FormFieldError id={errorId} error={error} />}
       </div>
     );
   }
