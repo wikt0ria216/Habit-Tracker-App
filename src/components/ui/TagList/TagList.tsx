@@ -3,14 +3,13 @@ import "./taglist.css";
 interface TagListProps {
   tags: string[];
   ariaLabel?: string;
-  id?: string;
 }
 
-const TagList = ({ tags, ariaLabel = "List of tags", id }: TagListProps) => {
+const TagList = ({ tags, ariaLabel = "List of tags" }: TagListProps) => {
   return (
-    <ul className="tags-list" role="list" aria-label={ariaLabel} id={id}>
+    <ul className="tags-list" aria-label={ariaLabel}>
       {tags.map((tag) => (
-        <li key={`${tag}-id`} className="tag-item">
+        <li key={`${tag}-item`} className="tag-item">
           <Tag tag={tag} />
         </li>
       ))}

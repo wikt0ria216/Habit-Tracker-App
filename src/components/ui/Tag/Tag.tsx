@@ -6,7 +6,7 @@ interface TagProps {
 
 const Tag = ({ tag }: TagProps) => {
   return (
-    <span className="tag" role="listitem">
+    <span className="tag">
       {tag}
     </span>
   );
