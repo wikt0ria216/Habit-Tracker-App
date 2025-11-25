@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import { ReactNode, useCallback, useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 import CustomButton, { SizeType, TextAlignType, VariantType } from "@ui/CustomButton/CustomButton";
@@ -9,7 +9,6 @@ import "./menudropdown.css";
 import { useMountTransition } from "@/hooks/useMountTransition";
 
 interface DropdownOptionProps {
-  id: string;
   label: string;
   icon?: ReactNode;
   action: () => void;
@@ -43,6 +42,9 @@ const MenuDropdown = ({
     top: 0,
     left: 0,
   });
+
+  const id = useId();
+  const menuId = `${id}-menu`;
 
   const dropdownRef = useRef<HTMLUListElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -135,10 +137,10 @@ const MenuDropdown = ({
 
   useEffect(() => {
     if (isOpen && focusedIndex !== -1) {
-      const focusedItem = document.getElementById(`dropdown-menu-item-${focusedIndex}`);
+      const focusedItem = document.getElementById(`${id}-option-${focusedIndex}`);
       focusedItem?.focus();
     }
-  }, [focusedIndex, isOpen]);
+  }, [focusedIndex, isOpen, id]);
 
   return (
     <div className="dropdown-menu-container">
@@ -153,7 +155,7 @@ const MenuDropdown = ({
         ariaHasPopup="true"
         ariaExpanded={isOpen}
         ariaLabel={openerAriaLabel}
-        ariaControls="dropdown-menu"
+        ariaControls={menuId}
         onKeyDown={handleKeyDown}
       >
         {openerLabel}
@@ -170,16 +172,16 @@ const MenuDropdown = ({
                 top: `${position.top}px`,
                 left: `${position.left}px`,
               }}
-              id="dropdown-menu"
+              id={menuId}
               role="menu"
               aria-label={dropdownAriaLabel || "Menu Options"}
             >
               {options.map((option, index) => (
                 <li
                   className={`dropdown-menu-item`}
-                  key={option.id}
+                  key={`${id}-option-${index}`}
                   onKeyDown={(event) => handleItemKeyDown(event, index)}
-                  id={`dropdown-menu-item-${index}`}
+                  id={`${id}-option-${index}`}
                   tabIndex={focusedIndex === index ? 0 : -1}
                 >
                   <CustomButton
