@@ -43,6 +43,12 @@
   margin-bottom: var(--spacing-2xl);
 }
 
+.sidebar-header span {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
 .sidebar-links {
   display: flex;
   flex: 1;

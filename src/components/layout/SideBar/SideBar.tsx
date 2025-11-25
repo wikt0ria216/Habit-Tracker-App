@@ -55,7 +55,6 @@ const SideBar = () => {
         ariaLabel="Open sidebar menu"
         ariaExpanded={isSideBarOpen}
         ariaControls="sidebar-menu"
-        ariaHasPopup="true"
       />
 
       <nav
@@ -63,14 +62,15 @@ const SideBar = () => {
         ref={sidebarRef}
         id="sidebar-menu"
         aria-label="Main navigation"
+        aria-hidden={!isSideBarOpen}
       >
         <div className="sidebar-header">
-          <h1 id="sidebar-label">Habit Tracker</h1>
+          <span>Habit Tracker</span>
         </div>
-        <ul className="sidebar-links" role="menubar">
+        <ul className="sidebar-links">
           {navItems.map((item) => (
             <li key={item.id} className="sidebar-link-item">
-              <NavLink to={item.to} className="sidebar-link" onClick={closeSideBar} role="menuitem">
+              <NavLink to={item.to} className="sidebar-link" onClick={closeSideBar}>
                 <span className="sidebar-link-icon" aria-hidden="true">
                   {item.icon}
                 </span>
@@ -100,7 +100,7 @@ const SideBar = () => {
 
         <Separator />
 
-        <section className="sidebar-user-container" aria-label="User information">
+        <div className="sidebar-user-container">
           {isLoading ? (
             <UserInfoSkeleton />
           ) : isError ? (
@@ -113,9 +113,9 @@ const SideBar = () => {
               email={userData?.email}
             />
           )}
-        </section>
+        </div>
       </nav>
-      <div className={`sidebar-overlay ${isSideBarOpen ? "open" : ""}`} onClick={closeSideBar}></div>
+      <div className={`sidebar-overlay ${isSideBarOpen ? "open" : ""}`} aria-hidden="true" onClick={closeSideBar}></div>
     </div>
   );
 };
