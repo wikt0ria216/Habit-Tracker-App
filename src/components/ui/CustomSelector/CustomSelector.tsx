@@ -70,7 +70,6 @@ const CustomSelector = <IsMulti extends boolean = false>({
   closeMenuOnSelect = !isMulti,
   inputId,
 }: CustomSelectorProps<IsMulti>) => {
-  const uniqueId = "select_" + Math.random().toFixed(5).slice(2);
 
   const customStyles: StylesConfig<SelectOption, boolean> = {
     control: (provided, state) => ({
@@ -215,7 +214,6 @@ const CustomSelector = <IsMulti extends boolean = false>({
     <>
       <Select
         options={options}
-        id={uniqueId}
         isMulti={isMulti}
         isSearchable={isSearchable}
         isClearable={isMulti}
