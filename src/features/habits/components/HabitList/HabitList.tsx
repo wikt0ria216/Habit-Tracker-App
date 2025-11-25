@@ -25,9 +25,9 @@ const HabitList = ({
   showCheckbox,
 }: HabitListProps) => {
   return (
-    <ul className="habit-list" role="list" aria-label={ariaLabel}>
+    <ul className="habit-list" aria-label={ariaLabel}>
       {habits?.map((habit) => (
-        <li key={habit.id} className="habit-list-item" role="listitem">
+        <li key={habit.id} className="habit-list-item">
           <HabitItem
             name={habit.habit_name}
             isCompleted={habit.is_completed}
