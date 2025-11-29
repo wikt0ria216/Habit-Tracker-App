@@ -9,16 +9,29 @@ interface SpinnerProps {
   size?: SpinnerSizeType;
   ariaLabel?: string;
   ariaLive?: "polite" | "assertive" | "off";
+  ariaHidden?: boolean;
 }
 
-const Spinner = ({ variant = "accent", size = "sml", ariaLabel = "Loading", ariaLive = "polite" }: SpinnerProps) => {
+const Spinner = ({
+  variant = "accent",
+  size = "sml",
+  ariaLabel = "Loading",
+  ariaLive = "polite",
+  ariaHidden = false,
+}: SpinnerProps) => {
   const spinnerClasses = classNames("spinner", {
     [`spinner-${variant}`]: variant,
     [`spinner-${size}`]: size,
   });
 
   return (
-    <div className={spinnerClasses} aria-label={ariaLabel} role="status" aria-live={ariaLive}>
+    <div
+      className={spinnerClasses}
+      aria-label={!ariaHidden ? ariaLabel : undefined}
+      role={!ariaHidden ? "status" : undefined}
+      aria-live={!ariaHidden ? ariaLive : undefined}
+      aria-hidden={ariaHidden}
+    >
       <span className="spinner-circle anim-spin" aria-hidden="true"></span>
     </div>
   );
