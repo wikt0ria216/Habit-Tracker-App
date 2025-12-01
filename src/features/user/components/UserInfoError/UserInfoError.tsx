@@ -24,7 +24,7 @@ const UserInfoError = ({ onRetry, message = "Failed to load user info" }: UserIn
         variant="ghost"
         icon={<RefreshCw size={16} />}
         onClick={onRetry}
-        aria-label="Retry loading user data"
+        ariaLabel="Retry loading user data"
       />
     </div>
   );
