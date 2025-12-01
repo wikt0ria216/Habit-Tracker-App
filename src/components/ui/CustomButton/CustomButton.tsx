@@ -17,15 +17,14 @@ interface CustomButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: SizeType;
   type?: "submit" | "reset" | "button";
   textAlign?: TextAlignType;
-  isDisabled?: boolean;
   isLoading?: boolean;
   className?: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   ariaLabel?: string;
   ariaExpanded?: boolean;
   ariaControls?: string;
   ariaHasPopup?: boolean | "dialog" | "grid" | "listbox" | "menu" | "tree" | "true" | "false";
-  spinnerAriaLabel?: string;
+  loadingMessage?: string;
 }
 
 const CustomButton = forwardRef<HTMLButtonElement, CustomButtonProps>(
@@ -35,15 +34,14 @@ const CustomButton = forwardRef<HTMLButtonElement, CustomButtonProps>(
       icon = false,
       variant = "accent",
       size = "md",
-      isDisabled = false,
       isLoading,
       className,
+      loadingMessage,
       ariaLabel,
       type = "button",
       ariaControls,
       ariaExpanded,
       ariaHasPopup,
-      spinnerAriaLabel,
       textAlign = "center",
       onClick,
       ...rest
@@ -56,22 +54,44 @@ const CustomButton = forwardRef<HTMLButtonElement, CustomButtonProps>(
       [`btn-${variant}`]: variant,
     });
 
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+      //Prevent button from being clicked when disabled
+      if (isLoading) {
+        e.preventDefault();
+        return;
+      }
+
+      onClick?.(e);
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+      // Prevent button from being clicked via keyboard when disabled
+      if (isLoading && (e.key === "Enter" || e.key === " ")) {
+        e.preventDefault();
+        return;
+      }
+    };
+
     return (
       <button
         {...rest}
-        disabled={isDisabled || isLoading}
         className={buttonClasses}
-        onClick={onClick}
+        onClick={handleClick}
+        onKeyDown={handleKeyDown}
         ref={ref}
         type={type}
-        aria-disabled={isDisabled || isLoading}
+        aria-disabled={isLoading}
+        aria-busy={isLoading}
         aria-label={ariaLabel}
         aria-expanded={ariaExpanded}
         aria-controls={ariaControls}
         aria-haspopup={ariaHasPopup}
       >
         {isLoading ? (
-          <Spinner size="xsm" variant={variant === "secondary" ? "inverted" : "light"} ariaLabel={spinnerAriaLabel} />
+          <>
+            <Spinner size="xsm" variant={variant === "secondary" ? "inverted" : "light"} ariaHidden />
+            <span>{loadingMessage}</span>
+          </>
         ) : (
           <>
             {icon && (
