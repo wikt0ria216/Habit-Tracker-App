@@ -55,9 +55,3 @@
 .hidden-checkbox:focus-visible + .checkbox-icon {
   outline: 2px solid var(--border-accent);
 }
-
-.checkbox-label {
-  display: block;
-  margin-left: var(--spacing-sml);
-  color: var(--text-primary);
-}
