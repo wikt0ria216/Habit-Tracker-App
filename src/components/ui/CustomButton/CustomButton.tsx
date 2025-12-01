@@ -19,7 +19,7 @@ interface CustomButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   textAlign?: TextAlignType;
   isLoading?: boolean;
   className?: string;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: ((e: React.MouseEvent<HTMLButtonElement>) => void) | (() => void);
   ariaLabel?: string;
   ariaExpanded?: boolean;
   ariaControls?: string;
