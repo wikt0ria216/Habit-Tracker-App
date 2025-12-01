@@ -81,6 +81,7 @@ const SignupPage = () => {
         footerLink="/login"
         buttonText="Sign Up"
         isButtonLoading={signUpNewUserIsPending}
+        buttonLoadingMessage="Signing up"
       >
         <FormInput
           label="First Name"

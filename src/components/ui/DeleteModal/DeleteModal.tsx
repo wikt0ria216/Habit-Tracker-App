@@ -39,7 +39,12 @@ const DeleteModal = ({
           <CustomButton variant="secondary" onClick={closeModal}>
             Cancel
           </CustomButton>
-          <CustomButton variant="danger" onClick={onHandleDelete} isLoading={isDeleting}>
+          <CustomButton
+            variant="danger"
+            onClick={onHandleDelete}
+            isLoading={isDeleting}
+            loadingMessage="Deleting"
+          >
             Delete
           </CustomButton>
         </>

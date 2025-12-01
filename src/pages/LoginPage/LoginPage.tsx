@@ -71,6 +71,7 @@ const LoginPage = () => {
         footerLinkText="Sign Up"
         isButtonLoading={isLoggingPending}
         onSubmit={handleSubmit(handleLogin)}
+        buttonLoadingMessage="Logging in"
       >
         <FormInput
           placeholder="yourname@company.com"

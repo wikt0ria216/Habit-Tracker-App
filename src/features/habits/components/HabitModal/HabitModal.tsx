@@ -189,8 +189,9 @@ const HabitModal = ({ modalType, isModalOpen, habitId, closeModal }: HabitModalF
             type="submit"
             isLoading={addHabitPending || editHabitPending}
             form="habit-form"
+            loadingMessage="Saving"
           >
-            {modalType === "add" ? "Add" : "Save"}
+            Save
           </CustomButton>
         </>
       }

@@ -46,7 +46,7 @@ const ProfilePage = () => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const avatarInputRef = useRef<HTMLInputElement>(null);
   const {
-    formState: { errors, dirtyFields, isDirty },
+    formState: { errors, dirtyFields },
     control,
     watch,
     handleSubmit,
@@ -227,10 +227,10 @@ const ProfilePage = () => {
           </div>
 
           <div className="profile-form-actions">
-            <CustomButton variant="secondary" onClick={handleCancel} isDisabled={!isDirty}>
+            <CustomButton variant="secondary" onClick={handleCancel}>
               Cancel
             </CustomButton>
-            <CustomButton type="submit" isDisabled={!isDirty || updateProfileMutation.isPending}>
+            <CustomButton type="submit" isLoading={updateProfileMutation.isPending} loadingMessage="Saving">
               Save
             </CustomButton>
           </div>

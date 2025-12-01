@@ -92,8 +92,14 @@ const AreaModal = ({ modalType, isModalOpen, areaId, closeModal }: AreaModalForm
           <CustomButton variant="secondary" onClick={modalCancelAction} type="button">
             Cancel
           </CustomButton>
-          <CustomButton variant="accent" type="submit" isLoading={addAreaPending || editAreaPending} form="area-form">
-            {modalType === "add" ? "Add" : "Save"}
+          <CustomButton
+            variant="accent"
+            type="submit"
+            isLoading={addAreaPending || editAreaPending}
+            loadingMessage="Saving"
+            form="area-form"
+          >
+            Save
           </CustomButton>
         </>
       }
