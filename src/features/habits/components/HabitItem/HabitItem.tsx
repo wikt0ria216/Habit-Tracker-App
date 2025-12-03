@@ -75,7 +75,7 @@ const HabitItem = forwardRef<HTMLDivElement, HabitItemProps>(
             <div className={`habit-item-header ${areas.length === 0 ? "no-areas" : ""}`}>
               <h3 className="habit-item-name">{name}</h3>
             </div>
-            {areas.length > 0 && <TagList tags={areas} ariaLabel={`Areas for ${name}`} />}
+            {areas.length > 0 && <TagList tags={areas} />}
           </div>
         </div>
       );
@@ -87,7 +87,7 @@ const HabitItem = forwardRef<HTMLDivElement, HabitItemProps>(
           <div className={`habit-item-header ${areas.length === 0 ? "no-areas" : ""}`}>
             <h3 className="habit-item-name">{name}</h3>
           </div>
-          {areas.length > 0 && <TagList tags={areas} ariaLabel={`Areas for ${name}`} />}
+          {areas.length > 0 && <TagList tags={areas} />}
         </div>
 
         {(showActions || showCheckbox) && (
