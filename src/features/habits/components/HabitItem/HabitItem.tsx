@@ -7,7 +7,6 @@ import { ThreeDotsVertical, Edit, Trash } from "@/assets/icons";
 
 import "./habititem.css";
 import CustomCheckbox from "@/components/ui/CustomCheckbox/CustomCheckbox";
-import Spinner from "@/components/ui/Spinner/Spinner";
 import { useCompleteHabit } from "../../hooks/useCompleteHabit";
 
 interface HabitItemProps {
@@ -63,7 +62,7 @@ const HabitItem = forwardRef<HTMLDivElement, HabitItemProps>(
       },
     ];
 
-    const { mutate: completeHabit, isPending: isCompleting } = useCompleteHabit(id);
+    const { mutate: completeHabit } = useCompleteHabit(id);
 
     const handleToggleComplete = () => {
       completeHabit({ habitId: id, isCompleted: !isCompleted });
@@ -94,18 +93,12 @@ const HabitItem = forwardRef<HTMLDivElement, HabitItemProps>(
         {(showActions || showCheckbox) && (
           <div className="habit-item-right">
             {showCheckbox && (
-              <div className="checkbox-container">
-                {isCompleting ? (
-                  <Spinner variant="secondary" size="sml" ariaLabel={`Loading completion of ${name} habit`} />
-                ) : (
-                  <CustomCheckbox
-                    id={`habit-checkbox-${id}`}
-                    checked={isCompleted}
-                    onChange={handleToggleComplete}
-                    ariaLabel={`Toggle completion for ${name} habit`}
-                  />
-                )}
-              </div>
+              <CustomCheckbox
+                id={`habit-checkbox-${id}`}
+                checked={isCompleted}
+                onChange={handleToggleComplete}
+                ariaLabel={`Complete ${name}`}
+              />
             )}
 
             {showActions && (
