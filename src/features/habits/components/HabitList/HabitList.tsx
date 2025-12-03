@@ -11,7 +11,6 @@ interface HabitListProps {
   showCheckbox?: boolean;
   onDelete?: (habitId: number) => void;
   onEdit?: (habitId: number) => void;
-  ariaLabel?: string;
 }
 
 const HabitList = ({
@@ -21,11 +20,10 @@ const HabitList = ({
   isReadOnly,
   ignoreCompletedStyle,
   showActions,
-  ariaLabel,
   showCheckbox,
 }: HabitListProps) => {
   return (
-    <ul className="habit-list" aria-label={ariaLabel}>
+    <ul className="habit-list">
       {habits?.map((habit) => (
         <li key={habit.id} className="habit-list-item">
           <HabitItem
