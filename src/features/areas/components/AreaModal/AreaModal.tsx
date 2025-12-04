@@ -108,6 +108,7 @@ const AreaModal = ({ modalType, isModalOpen, areaId, closeModal }: AreaModalForm
         <FormInput
           label="Area Name"
           id="area-name"
+          isRequired
           placeholder={modalType === "add" ? "Area name" : "New area name"}
           autoComplete="off"
           {...register("areaName")}
