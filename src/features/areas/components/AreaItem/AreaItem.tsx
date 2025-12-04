@@ -14,7 +14,6 @@ interface AreaItemProps {
 const AreaItem = ({ areaName, habitsCount, onDelete, onEdit, id }: AreaItemProps) => {
   const dropdownOptions = [
     {
-      id: "edit",
       label: "Edit",
       icon: <Edit />,
       action: () => {
@@ -25,7 +24,6 @@ const AreaItem = ({ areaName, habitsCount, onDelete, onEdit, id }: AreaItemProps
       ariaLabel: `Edit area ${areaName}`,
     },
     {
-      id: "delete",
       label: "Delete",
       icon: <Trash />,
       action: () => {

@@ -39,7 +39,6 @@ const HabitItem = forwardRef<HTMLDivElement, HabitItemProps>(
   ) => {
     const dropdownOptions = [
       {
-        id: "edit",
         label: "Edit",
         icon: <Edit />,
         action: () => {
@@ -50,7 +49,6 @@ const HabitItem = forwardRef<HTMLDivElement, HabitItemProps>(
         ariaLabel: `Edit habit ${name}`,
       },
       {
-        id: "delete",
         label: "Delete",
         icon: <Trash />,
         action: () => {
