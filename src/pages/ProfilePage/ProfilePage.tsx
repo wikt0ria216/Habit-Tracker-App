@@ -165,12 +165,14 @@ const ProfilePage = () => {
                 />
                 <div className="profile-avatar-content">
                   <div className="profile-avatar-controls">
-                    <CustomButton variant="secondary" onClick={() => avatarInputRef.current?.click()}>
+                    <CustomButton
+                      variant="secondary"
+                      onClick={() => avatarInputRef.current?.click()}
+                      ariaLabel="Upload avatar. JPG, JPEG or PNG, max 2MB"
+                    >
                       Upload
                     </CustomButton>
-                    <p id="profile-avatar-hint" className="profile-avatar-hint">
-                      JPG, JPEG or PNG (max 2MB)
-                    </p>
+                    <p className="profile-avatar-hint">JPG, JPEG or PNG (max 2MB)</p>
                   </div>
                   {errors.avatar && (
                     <span id="profile-avatar-error" className="profile-avatar-error" role="alert">
@@ -178,16 +180,14 @@ const ProfilePage = () => {
                     </span>
                   )}
                 </div>
-                <label htmlFor="image" className="sr-only">
-                  Upload avatar file
-                </label>
                 <input
                   type="file"
                   id="image"
                   ref={avatarInputRef}
                   className="sr-only"
                   accept="image/jpeg, image/png, image/jpg"
-                  aria-describedby={`profile-avatar-hint ${errors.avatar ? "profile-avatar-error" : ""}`}
+                  aria-describedby={`${errors.avatar ? "profile-avatar-error" : ""}`}
+                  tabIndex={-1}
                   onChange={(e) => {
                     const selectedFile = e.target.files?.[0] || null;
                     field.onChange(selectedFile);
