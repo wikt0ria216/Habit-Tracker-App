@@ -32,7 +32,7 @@
   background-color: var(--bg-secondary);
 }
 
-.sidebar.open {
+.sidebar.visible.in {
   transform: translateX(0);
 }
 
@@ -95,8 +95,6 @@
 }
 
 .sidebar-overlay {
-  pointer-events: none;
-
   position: fixed;
   z-index: var(--z-index-sidebar-overlay);
   inset: 0;
@@ -108,12 +106,11 @@
   background-color: var(--bg-overlay-backdrop);
 }
 
-.sidebar-overlay.open {
-  pointer-events: all;
+.sidebar-overlay.visible.in {
   opacity: 1;
 }
 
-@media (width >= 1280px) {
+@media (width >= 1024px) {
   .sidebar-container .sidebar-overlay {
     display: none;
   }
