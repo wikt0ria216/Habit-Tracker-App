@@ -211,6 +211,8 @@ const CustomSelector = <IsMulti extends boolean = false>({
     onChange(newValue as IsMulti extends true ? MultiValue<SelectOption> : SingleValue<SelectOption>);
   };
 
+  const errorId = inputId ? `${inputId}-error` : undefined;
+
   return (
     <>
       <Select
@@ -220,6 +222,7 @@ const CustomSelector = <IsMulti extends boolean = false>({
         isClearable={isMulti}
         onChange={handleChange}
         inputId={inputId}
+        instanceId={inputId}
         value={value}
         name={name}
         className={className}
@@ -234,10 +237,12 @@ const CustomSelector = <IsMulti extends boolean = false>({
         menuPortalTarget={document.body}
         menuPosition="fixed"
         aria-label={ariaLabel}
+        aria-invalid={!!error}
+        aria-errormessage={error ? errorId : undefined}
         required={isRequired}
       />
 
-      {error && <FormFieldError id={inputId} error={error} />}
+      {error && <FormFieldError id={errorId} error={error} />}
     </>
   );
 };
