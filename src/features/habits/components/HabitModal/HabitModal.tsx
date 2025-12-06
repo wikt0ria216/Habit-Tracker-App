@@ -220,6 +220,8 @@ const HabitModal = ({ modalType, isModalOpen, habitId, closeModal }: HabitModalF
                   error={errors.frequency?.message}
                   onChange={handleFrequencyChange}
                   inputId="frequency-select"
+                  isRequired
+                  name={field.name}
                 />
               </>
             )}
@@ -269,6 +271,7 @@ const HabitModal = ({ modalType, isModalOpen, habitId, closeModal }: HabitModalF
                   error={errors.areas?.message}
                   isMulti
                   inputId="areas-select"
+                  name={field.name}
                 />
               </>
             )}
