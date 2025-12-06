@@ -104,7 +104,7 @@ const AreaModal = ({ modalType, isModalOpen, areaId, closeModal }: AreaModalForm
         </>
       }
     >
-      <form onSubmit={handleSubmit(onAreaFormSubmit)} className="area-form" id="area-form">
+      <form onSubmit={handleSubmit(onAreaFormSubmit)} className="area-form" id="area-form" noValidate>
         <FormInput
           label="Area Name"
           id="area-name"

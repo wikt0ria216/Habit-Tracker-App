@@ -38,7 +38,7 @@ const AuthForm = ({
           <h1 className="auth-form-title-text">{title}</h1>
           {subtitle && <p className="auth-form-subtitle-text">{subtitle}</p>}
         </div>
-        <form onSubmit={onSubmit} className="auth-form" {...rest}>
+        <form onSubmit={onSubmit} className="auth-form" {...rest} noValidate>
           {children}
           <div className="auth-form-actions">
             <CustomButton isLoading={isButtonLoading} type="submit" loadingMessage={buttonLoadingMessage}>

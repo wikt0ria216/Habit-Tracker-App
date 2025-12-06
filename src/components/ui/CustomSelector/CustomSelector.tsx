@@ -29,6 +29,7 @@ interface CustomSelectorProps<IsMulti extends boolean = false> {
   inputId?: string;
   ariaLabel?: string;
   name?: string;
+  isRequired?: boolean;
 }
 
 /**
@@ -64,13 +65,13 @@ const CustomSelector = <IsMulti extends boolean = false>({
   className,
   name,
   error,
+  isRequired = false,
   ariaLabel,
   placeholder = "Select...",
   isSearchable = false,
   closeMenuOnSelect = !isMulti,
   inputId,
 }: CustomSelectorProps<IsMulti>) => {
-
   const customStyles: StylesConfig<SelectOption, boolean> = {
     control: (provided, state) => ({
       ...provided,
@@ -233,6 +234,7 @@ const CustomSelector = <IsMulti extends boolean = false>({
         menuPortalTarget={document.body}
         menuPosition="fixed"
         aria-label={ariaLabel}
+        required={isRequired}
       />
 
       {error && <FormFieldError id={inputId} error={error} />}

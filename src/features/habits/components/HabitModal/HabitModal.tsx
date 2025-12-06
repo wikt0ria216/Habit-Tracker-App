@@ -196,7 +196,7 @@ const HabitModal = ({ modalType, isModalOpen, habitId, closeModal }: HabitModalF
         </>
       }
     >
-      <form onSubmit={handleSubmit(onFormSubmit)} className="habit-form" id="habit-form">
+      <form onSubmit={handleSubmit(onFormSubmit)} className="habit-form" id="habit-form" noValidate>
         <FormInput
           label="Habit Name"
           id="habitname"

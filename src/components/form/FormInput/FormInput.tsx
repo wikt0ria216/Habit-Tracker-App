@@ -73,6 +73,7 @@ const FormInput = forwardRef<HTMLInputElement, InputProps>(
             placeholder={placeholder}
             aria-describedby={error ? errorId : undefined}
             aria-invalid={!!error}
+            required={isRequired}
             aria-required={isRequired}
             {...rest}
           />
