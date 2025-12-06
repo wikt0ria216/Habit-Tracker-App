@@ -96,7 +96,7 @@ const MenuDropdown = ({
     }
   };
 
-  const handleItemKeyDown = (event: React.KeyboardEvent<HTMLLIElement>, index: number) => {
+  const handleItemKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
     if (event.key === "ArrowDown") {
       event.preventDefault();
       setFocusedIndex((prevIndex) => (prevIndex !== null && prevIndex < options.length - 1 ? prevIndex + 1 : 0));
@@ -177,13 +177,7 @@ const MenuDropdown = ({
               aria-label={dropdownAriaLabel || "Menu Options"}
             >
               {options.map((option, index) => (
-                <li
-                  className={`dropdown-menu-item`}
-                  key={`${id}-option-${index}`}
-                  onKeyDown={(event) => handleItemKeyDown(event, index)}
-                  id={`${id}-option-${index}`}
-                  tabIndex={focusedIndex === index ? 0 : -1}
-                >
+                <li className={`dropdown-menu-item`} key={`${id}-option-${index}`}>
                   <CustomButton
                     onClick={() => {
                       option.action();
@@ -194,6 +188,9 @@ const MenuDropdown = ({
                     textAlign="left"
                     role="menuitem"
                     className="dropdown-menu-btn"
+                    id={`${id}-option-${index}`}
+                    onKeyDown={(event) => handleItemKeyDown(event, index)}
+                    tabIndex={focusedIndex === index ? 0 : -1}
                   >
                     {option.label}
                   </CustomButton>

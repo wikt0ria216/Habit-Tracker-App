@@ -20,6 +20,7 @@ interface CustomButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
   className?: string;
   onClick?: ((e: React.MouseEvent<HTMLButtonElement>) => void) | (() => void);
+  onKeyDown?: (e: React.KeyboardEvent<HTMLButtonElement>) => void;
   ariaLabel?: string;
   ariaExpanded?: boolean;
   ariaControls?: string;
@@ -44,6 +45,7 @@ const CustomButton = forwardRef<HTMLButtonElement, CustomButtonProps>(
       ariaHasPopup,
       textAlign = "center",
       onClick,
+      onKeyDown,
       ...rest
     },
     ref
@@ -70,6 +72,8 @@ const CustomButton = forwardRef<HTMLButtonElement, CustomButtonProps>(
         e.preventDefault();
         return;
       }
+
+      onKeyDown?.(e);
     };
 
     return (
