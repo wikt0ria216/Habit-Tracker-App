@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useId } from "react";
 import classNames from "classnames";
 
 import "./card.css";
@@ -13,24 +13,24 @@ interface CardProps {
 
 const Card = ({ title, children, className, headerExtra, ariaLabel = "Card" }: CardProps) => {
   const cardClasses = classNames("card", className);
-  const titleId = `card-title-${title?.replace(/\s+/g, "-").toLowerCase()}`;
+  const headerId = useId();
 
   return (
-    <div
+    <section
       className={cardClasses}
-      tabIndex={0}
-      {...(title ? { "aria-labelledby": titleId } : { "aria-label": ariaLabel })}
+      aria-label={!title ? ariaLabel : undefined}
+      aria-labelledby={title ? headerId : undefined}
     >
       {(title || headerExtra) && (
         <>
           <div className="card-header">
-            {title && <h2 id={titleId}>{title}</h2>}
+            {title && <h2 id={headerId}>{title}</h2>}
             {headerExtra && <div className="card-header-extra">{headerExtra}</div>}
           </div>
         </>
       )}
       <div className="card-body">{children}</div>
-    </div>
+    </section>
   );
 };
 

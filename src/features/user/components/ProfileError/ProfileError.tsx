@@ -7,10 +7,10 @@ interface ProfileErrorProps {
 
 const ProfileError = ({ onRetry }: ProfileErrorProps) => {
   return (
-    <div className="profile-error">
+    <div className="profile-error" role="alert">
       <p className="profile-error-text">Failed to load profile. Please try again.</p>
       <CustomButton onClick={onRetry} variant="secondary">
-        Refresh
+        Try again
       </CustomButton>
     </div>
   );

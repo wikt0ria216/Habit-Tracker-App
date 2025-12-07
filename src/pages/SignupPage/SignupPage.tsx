@@ -81,10 +81,11 @@ const SignupPage = () => {
         footerLink="/login"
         buttonText="Sign Up"
         isButtonLoading={signUpNewUserIsPending}
+        buttonLoadingMessage="Signing up"
       >
         <FormInput
           label="First Name"
-          autoComplete="off"
+          autoComplete="given-name"
           id="first-name"
           placeholder="First Name"
           {...register("firstName")}
@@ -94,7 +95,7 @@ const SignupPage = () => {
 
         <FormInput
           label="Last Name"
-          autoComplete="off"
+          autoComplete="family-name"
           id="last-name"
           placeholder="Last Name"
           {...register("lastName")}
@@ -105,7 +106,7 @@ const SignupPage = () => {
         <FormInput
           label="Email"
           id="email"
-          autoComplete="off"
+          autoComplete="email"
           type="email"
           placeholder="youremail@company.com"
           {...register("email")}
@@ -116,14 +117,14 @@ const SignupPage = () => {
         <FormInput
           label="Password"
           id="password"
-          autoComplete="off"
+          autoComplete="new-password"
           type={passwordType}
           icon={passwordType === "password" ? <EyeOff /> : <Eye />}
           onIconClick={handleToggle}
           placeholder="Password"
           {...register("password")}
           error={errors.password?.message}
-          iconAriaLabel={passwordType === "password" ? "Show password icon" : "Hide password icon"}
+          iconAriaLabel={passwordType === "password" ? "Show password" : "Hide password"}
           isRequired
         />
       </AuthForm>

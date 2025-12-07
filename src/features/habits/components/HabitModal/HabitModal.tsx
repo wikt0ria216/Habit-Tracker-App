@@ -189,13 +189,14 @@ const HabitModal = ({ modalType, isModalOpen, habitId, closeModal }: HabitModalF
             type="submit"
             isLoading={addHabitPending || editHabitPending}
             form="habit-form"
+            loadingMessage="Saving"
           >
-            {modalType === "add" ? "Add" : "Save"}
+            Save
           </CustomButton>
         </>
       }
     >
-      <form onSubmit={handleSubmit(onFormSubmit)} className="habit-form" id="habit-form">
+      <form onSubmit={handleSubmit(onFormSubmit)} className="habit-form" id="habit-form" noValidate>
         <FormInput
           label="Habit Name"
           id="habitname"
@@ -219,6 +220,8 @@ const HabitModal = ({ modalType, isModalOpen, habitId, closeModal }: HabitModalF
                   error={errors.frequency?.message}
                   onChange={handleFrequencyChange}
                   inputId="frequency-select"
+                  isRequired
+                  name={field.name}
                 />
               </>
             )}
@@ -268,6 +271,7 @@ const HabitModal = ({ modalType, isModalOpen, habitId, closeModal }: HabitModalF
                   error={errors.areas?.message}
                   isMulti
                   inputId="areas-select"
+                  name={field.name}
                 />
               </>
             )}

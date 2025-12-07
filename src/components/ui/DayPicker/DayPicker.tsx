@@ -32,14 +32,11 @@ const DayPicker = ({
       className={daypickerClasses}
       role="group"
       aria-label={isMonthly ? "Select days of the month" : "Select days of the week"}
+      aria-describedby={error ? "days-error" : undefined}
     >
-      <ul
-        className="daypicker-days-list"
-        role="list"
-        aria-label={isMonthly ? "List of days in a month" : "List of days in a week"}
-      >
+      <ul className="daypicker-days-list">
         {days.map((day) => (
-          <li key={`day-${day}`} className="daypicker-day-item" role="listitem">
+          <li key={`day-${day}`} className="daypicker-day-item">
             <label className={`daypicker-day-label`} htmlFor={`day-${day}`}>
               <input
                 type="checkbox"
@@ -49,10 +46,8 @@ const DayPicker = ({
                 name="days"
                 disabled={isOptionDisabled}
                 id={`day-${day}`}
-                aria-label={`Select ${dayFullNames[day] || day} for habit scheduling`}
-                aria-describedby={error ? `days-error` : undefined}
+                aria-label={dayFullNames[day] || day}
               />
-
               <span
                 className={`daypicker-custom-checkbox ${selectedDays.includes(day) ? "checked" : ""} ${
                   isOptionDisabled ? "disabled" : ""

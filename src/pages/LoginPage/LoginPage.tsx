@@ -71,13 +71,14 @@ const LoginPage = () => {
         footerLinkText="Sign Up"
         isButtonLoading={isLoggingPending}
         onSubmit={handleSubmit(handleLogin)}
+        buttonLoadingMessage="Logging in"
       >
         <FormInput
           placeholder="yourname@company.com"
           label="Email"
           id="email"
           type="email"
-          autoComplete="off"
+          autoComplete="email"
           {...register("email")}
           error={errors.email?.message}
           isRequired
@@ -87,13 +88,13 @@ const LoginPage = () => {
           placeholder="Enter your password"
           label="Password"
           id="password"
-          autoComplete="off"
+          autoComplete="current-password"
           onIconClick={handleToggle}
           icon={passwordType === "password" ? <EyeOff /> : <Eye />}
           type={passwordType}
           {...register("password")}
           error={errors.password?.message}
-          iconAriaLabel={passwordType === "password" ? "Show password icon" : "Hide password icon"}
+          iconAriaLabel={passwordType === "password" ? "Show password" : "Hide password"}
           isRequired
         />
       </AuthForm>

@@ -7,7 +7,6 @@ import { ThreeDotsVertical, Edit, Trash } from "@/assets/icons";
 
 import "./habititem.css";
 import CustomCheckbox from "@/components/ui/CustomCheckbox/CustomCheckbox";
-import Spinner from "@/components/ui/Spinner/Spinner";
 import { useCompleteHabit } from "../../hooks/useCompleteHabit";
 
 interface HabitItemProps {
@@ -40,7 +39,6 @@ const HabitItem = forwardRef<HTMLDivElement, HabitItemProps>(
   ) => {
     const dropdownOptions = [
       {
-        id: "edit",
         label: "Edit",
         icon: <Edit />,
         action: () => {
@@ -51,7 +49,6 @@ const HabitItem = forwardRef<HTMLDivElement, HabitItemProps>(
         ariaLabel: `Edit habit ${name}`,
       },
       {
-        id: "delete",
         label: "Delete",
         icon: <Trash />,
         action: () => {
@@ -63,69 +60,43 @@ const HabitItem = forwardRef<HTMLDivElement, HabitItemProps>(
       },
     ];
 
-    const { mutate: completeHabit, isPending: isCompleting } = useCompleteHabit(id);
+    const { mutate: completeHabit } = useCompleteHabit(id);
 
     const handleToggleComplete = () => {
       completeHabit({ habitId: id, isCompleted: !isCompleted });
     };
 
-    const uniquePrefix = Date.now();
-    const habitItemId = `habit-item-${id}-${name.replace(/\s+/g, "-").toLowerCase()}`;
-    const areasListId = `areas-list-${id}-${name.replace(/\s+/g, "-").toLowerCase()}`;
-
     if (isReadOnly) {
       return (
-        <div
-          className="habit-item"
-          ref={ref}
-          role="region"
-          tabIndex={0}
-          aria-labelledby={areas.length > 0 ? `${habitItemId} ${areasListId}` : habitItemId}
-        >
+        <div className="habit-item" ref={ref}>
           <div className="habit-item-left">
             <div className={`habit-item-header ${areas.length === 0 ? "no-areas" : ""}`}>
-              <h3 className="habit-item-name" id={habitItemId}>
-                {name}
-              </h3>
+              <h3 className="habit-item-name">{name}</h3>
             </div>
-            {areas.length > 0 && <TagList tags={areas} ariaLabel={`Areas for ${name}`} />}
+            {areas.length > 0 && <TagList tags={areas} />}
           </div>
         </div>
       );
     }
 
     return (
-      <div
-        className={`habit-item ${!isReadOnly && isCompleted && !ignoreCompletedStyle ? "completed" : ""}`}
-        ref={ref}
-        role="region"
-        tabIndex={0}
-        aria-labelledby={areas.length > 0 ? `${habitItemId} ${areasListId}` : habitItemId}
-      >
+      <div className={`habit-item ${!isReadOnly && isCompleted && !ignoreCompletedStyle ? "completed" : ""}`} ref={ref}>
         <div className="habit-item-left">
           <div className={`habit-item-header ${areas.length === 0 ? "no-areas" : ""}`}>
-            <h3 className="habit-item-name" id={habitItemId}>
-              {name}
-            </h3>
+            <h3 className="habit-item-name">{name}</h3>
           </div>
-          {areas.length > 0 && <TagList tags={areas} ariaLabel={`Areas for ${name}`} />}
+          {areas.length > 0 && <TagList tags={areas} />}
         </div>
 
         {(showActions || showCheckbox) && (
           <div className="habit-item-right">
             {showCheckbox && (
-              <div className="checkbox-container">
-                {isCompleting ? (
-                  <Spinner variant="secondary" size="sml" ariaLabel={`Loading the completion of ${name} habit`} />
-                ) : (
-                  <CustomCheckbox
-                    id={`habit-checkbox-${uniquePrefix}-${id}`}
-                    checked={isCompleted}
-                    onChange={handleToggleComplete}
-                    ariaLabel={`Toggle completion for ${name} habit`}
-                  />
-                )}
-              </div>
+              <CustomCheckbox
+                id={`habit-checkbox-${id}`}
+                checked={isCompleted}
+                onChange={handleToggleComplete}
+                ariaLabel={`Complete ${name}`}
+              />
             )}
 
             {showActions && (

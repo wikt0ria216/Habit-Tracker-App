@@ -42,13 +42,3 @@
   justify-content: flex-end;
 }
 
-.checkbox-container {
-  position: relative; /* Zapewnia, że spinner i checkbox są w tej samej pozycji */
-  
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 24px; 
-  height: 24px;
-}

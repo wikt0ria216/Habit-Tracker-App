@@ -14,6 +14,7 @@ interface AuthFormProps extends FormHTMLAttributes<HTMLFormElement> {
   footerLink: string;
   children: ReactNode;
   footerLinkText: string;
+  buttonLoadingMessage?: string;
   onSubmit: () => void;
 }
 
@@ -24,6 +25,7 @@ const AuthForm = ({
   footerText,
   children,
   isButtonLoading,
+  buttonLoadingMessage,
   footerLink,
   footerLinkText,
   onSubmit,
@@ -36,10 +38,12 @@ const AuthForm = ({
           <h1 className="auth-form-title-text">{title}</h1>
           {subtitle && <p className="auth-form-subtitle-text">{subtitle}</p>}
         </div>
-        <form onSubmit={onSubmit} className="auth-form" {...rest}>
+        <form onSubmit={onSubmit} className="auth-form" {...rest} noValidate>
           {children}
           <div className="auth-form-actions">
-            <CustomButton isLoading={isButtonLoading}>{buttonText}</CustomButton>
+            <CustomButton isLoading={isButtonLoading} type="submit" loadingMessage={buttonLoadingMessage}>
+              {buttonText}
+            </CustomButton>
           </div>
         </form>
         <div className="auth-form-footer">

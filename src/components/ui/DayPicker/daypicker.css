@@ -20,7 +20,7 @@
 
 .day-checkbox {
   position: absolute;
-  left: -9999px; /* Przesuwamy poza ekran, ale zachowujemy dostępność */
+  left: -9999px;
 }
 
 .daypicker-custom-checkbox {
@@ -53,5 +53,5 @@
 }
 
 .day-checkbox:focus-visible + .daypicker-custom-checkbox {
-  outline: 2px solid white;
+  outline: 2px solid var(--border-accent);
 }

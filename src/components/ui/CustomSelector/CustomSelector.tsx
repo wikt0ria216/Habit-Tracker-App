@@ -29,6 +29,7 @@ interface CustomSelectorProps<IsMulti extends boolean = false> {
   inputId?: string;
   ariaLabel?: string;
   name?: string;
+  isRequired?: boolean;
 }
 
 /**
@@ -64,14 +65,13 @@ const CustomSelector = <IsMulti extends boolean = false>({
   className,
   name,
   error,
+  isRequired = false,
   ariaLabel,
   placeholder = "Select...",
   isSearchable = false,
   closeMenuOnSelect = !isMulti,
   inputId,
 }: CustomSelectorProps<IsMulti>) => {
-  const uniqueId = "select_" + Math.random().toFixed(5).slice(2);
-
   const customStyles: StylesConfig<SelectOption, boolean> = {
     control: (provided, state) => ({
       ...provided,
@@ -211,16 +211,18 @@ const CustomSelector = <IsMulti extends boolean = false>({
     onChange(newValue as IsMulti extends true ? MultiValue<SelectOption> : SingleValue<SelectOption>);
   };
 
+  const errorId = inputId ? `${inputId}-error` : undefined;
+
   return (
     <>
       <Select
         options={options}
-        id={uniqueId}
         isMulti={isMulti}
         isSearchable={isSearchable}
         isClearable={isMulti}
         onChange={handleChange}
         inputId={inputId}
+        instanceId={inputId}
         value={value}
         name={name}
         className={className}
@@ -235,9 +237,12 @@ const CustomSelector = <IsMulti extends boolean = false>({
         menuPortalTarget={document.body}
         menuPosition="fixed"
         aria-label={ariaLabel}
+        aria-invalid={!!error}
+        aria-errormessage={error ? errorId : undefined}
+        required={isRequired}
       />
 
-      {error && <FormFieldError id={inputId} error={error} />}
+      {error && <FormFieldError id={errorId} error={error} />}
     </>
   );
 };

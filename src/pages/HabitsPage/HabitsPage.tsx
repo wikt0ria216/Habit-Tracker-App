@@ -29,7 +29,7 @@ const HabitsPage = () => {
           New Habit
         </CustomButton>
       </PageHeader>
-      <Card ariaLabel="card-title-habits">
+      <Card ariaLabel="Your Habits">
         <HabitStateHandler
           habits={habits}
           isError={isHabitsError}

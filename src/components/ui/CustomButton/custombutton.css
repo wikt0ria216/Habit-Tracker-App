@@ -3,6 +3,7 @@
   cursor: pointer;
 
   display: flex;
+  gap: var(--spacing-sml);
   align-items: center;
 
   border: none;
@@ -29,7 +30,6 @@
 
 /* Icon Styles */
 .btn-icon {
-  margin-right: var(--spacing-sml);
   color: var(--icon-secondary);
 }
 
@@ -140,11 +140,7 @@
 }
 
 /* disabled btn */
-.btn[disabled] {
+.btn[aria-disabled="true"] {
   pointer-events: none;
-  opacity: 0.5;
-}
-
-.btn[disabled] .btn-icon {
   opacity: 0.5;
 }

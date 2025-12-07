@@ -10,7 +10,6 @@ import Card from "@ui/Card/Card";
 import CustomButton from "@ui/CustomButton/CustomButton";
 import CustomSelector from "@ui/CustomSelector/CustomSelector";
 import HabitList from "@features/habits/components/HabitList/HabitList";
-import ProgressBar from "@ui/ProgressBar/ProgressBar";
 import PageHeader from "@layout/PageHeader/PageHeader";
 
 import { Plus } from "@/assets/icons";
@@ -22,6 +21,7 @@ import HabitStateHandler from "@/features/habits/components/HabitStateHandler/Ha
 import HabitModalsManager from "@/features/habits/components/HabitModalsManager/HabitModalsManager";
 import { calculateHabitProgress } from "@/utils/calculateHabitProgress";
 import "./homepage.css";
+import ProgressBar from "@/components/ui/ProgressBar/ProgressBar";
 
 const DEAFULT_FILTER: SelectOption = { value: "all", label: "All" };
 
@@ -99,12 +99,7 @@ const HomePage = () => {
               loadingLabel="Loading the list of habits uncompleted today."
               retry={refetchHabits}
             >
-              <HabitList
-                habits={notCompletedHabits}
-                onEdit={openEditHabitModal}
-                onDelete={openDeleteHabitModal}
-                ariaLabel="List of uncompleted habits for today"
-              />
+              <HabitList habits={notCompletedHabits} onEdit={openEditHabitModal} onDelete={openDeleteHabitModal} />
             </HabitStateHandler>
           </div>
         </Card>
@@ -122,24 +117,12 @@ const HomePage = () => {
               loadingLabel="Loading the list of habits completed today"
               retry={refetchHabits}
             >
-              <HabitList
-                habits={completedHabits}
-                onEdit={openEditHabitModal}
-                onDelete={openDeleteHabitModal}
-                ariaLabel="List of habits completed today"
-              />
+              <HabitList habits={completedHabits} onEdit={openEditHabitModal} onDelete={openDeleteHabitModal} />
             </HabitStateHandler>
           </div>
         </Card>
         <Card title="Todays Progress" className="stat">
-          <div className="progress-bar">
-            <ProgressBar
-              percentage={progress}
-              size={250}
-              strokeWidth={24}
-              ariaLabel="Today's completed habits progress"
-            />
-          </div>
+          <ProgressBar percentage={progress} size={250} thickness={8} ariaLabel="Daily habits completion" />
         </Card>
         <Card title="Tomorrow Habits" className="upcoming-habits">
           <div className="upcoming-habits-list">
@@ -151,7 +134,7 @@ const HomePage = () => {
               loadingLabel="Loading tomorrow's list of habits"
               retry={refetchHabits}
             >
-              <HabitList habits={tomorrowHabits} isReadOnly ariaLabel="List of upcoming habits for tomorrow" />
+              <HabitList habits={tomorrowHabits} isReadOnly />
             </HabitStateHandler>
           </div>
         </Card>

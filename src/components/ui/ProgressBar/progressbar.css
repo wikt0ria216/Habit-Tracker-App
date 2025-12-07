@@ -1,45 +1,27 @@
-.circular-progress-bar {
-  position: relative;
-
+.progress-bar-container {
   display: flex;
-  flex-direction: column;
+  flex: 1;
   align-items: center;
-  justify-content: space-between;
-
-  min-height: auto;
+  justify-content: center;
 }
 
-.circular-progress-bar-track,
-.circular-progress-bar-progress {
-  transition: stroke-dashoffset var(--transition-slow), stroke var(--transition-default); /* Progress animation */
+.progress-bar-shape {
+  position: relative;
+  width: 100%;
 }
 
-.circular-progress-bar-details {
+.progress-bar-value span {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 
-  text-align: center;
+  font-size: var(--text-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-accent);
 }
 
-.circular-progress-bar-status {
-  display: flex;
-  gap: var(--spacing-xlg);
-  justify-content: center;
-}
-
-.status-indicator {
-  display: flex;
-  gap: var(--spacing-sml);
-  align-items: center;
-}
-
-.status-indicator svg circle {
-  transition: fill var(--transition-default);
-}
-
-.status-indicator-label {
-  font-size: var(--text-sml);
-  color: var(--text-secondary);
+.progress-bar-track,
+.progress-bar-fill {
+  transition: stroke-dashoffset var(--transition-slow), stroke var(--transition-default);
 }
