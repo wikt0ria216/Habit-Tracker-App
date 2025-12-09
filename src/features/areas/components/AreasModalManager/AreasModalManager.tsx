@@ -1,19 +1,15 @@
 import AreaModal from "../AreaModal/AreaModal";
 import AreaDeleteModal from "../AreaDeleteModal/AreaDeleteModal";
+import { Area } from "@/types/Area";
 
 interface AreasModalManagerProps {
   modalType: "add" | "edit" | "delete" | null;
   isModalOpen: boolean;
   closeModal: () => void;
-  areaId?: number;
+  selectedArea?: Area | null;
 }
 
-const AreasModalManager = ({
-  modalType,
-  isModalOpen,
-  closeModal,
-  areaId,
-}: AreasModalManagerProps) => {
+const AreasModalManager = ({ modalType, isModalOpen, closeModal, selectedArea }: AreasModalManagerProps) => {
   return (
     <>
       {(modalType === "add" || modalType === "edit") && (
@@ -21,15 +17,11 @@ const AreasModalManager = ({
           modalType={modalType === "add" ? "add" : "edit"}
           isModalOpen={isModalOpen}
           closeModal={closeModal}
-          areaId={areaId}
+          areaToEdit={selectedArea}
         />
       )}
       {modalType === "delete" && (
-        <AreaDeleteModal
-          closeModal={closeModal}
-          isModalOpen={isModalOpen}
-          areaId={areaId}
-        />
+        <AreaDeleteModal closeModal={closeModal} isModalOpen={isModalOpen} areaToDelete={selectedArea} />
       )}
     </>
   );

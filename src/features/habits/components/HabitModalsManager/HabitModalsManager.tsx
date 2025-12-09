@@ -1,18 +1,14 @@
 import HabitModal from "../HabitModal/HabitModal";
 import HabitDeleteModal from "../HabitDeleteModal/HabitDeleteModal";
+import { Habit } from "@/types/Habit";
 
 interface HabitModalsManagerProps {
   modalType: "add" | "edit" | "delete" | null;
   isModalOpen: boolean;
   closeModal: () => void;
-  habitId?: number;
+  selectedHabit?: Habit | null;
 }
-const HabitModalsManager = ({
-  modalType,
-  isModalOpen,
-  closeModal,
-  habitId,
-}: HabitModalsManagerProps) => {
+const HabitModalsManager = ({ modalType, isModalOpen, closeModal, selectedHabit }: HabitModalsManagerProps) => {
   return (
     <>
       {(modalType === "add" || modalType === "edit") && (
@@ -20,15 +16,11 @@ const HabitModalsManager = ({
           closeModal={closeModal}
           modalType={modalType === "add" ? "add" : "edit"}
           isModalOpen={isModalOpen}
-          habitId={habitId}
+          habitToEdit={selectedHabit}
         />
       )}
       {modalType === "delete" && (
-        <HabitDeleteModal
-          closeModal={closeModal}
-          isModalOpen={isModalOpen}
-          habitId={habitId}
-        />
+        <HabitDeleteModal closeModal={closeModal} isModalOpen={isModalOpen} habitToDelete={selectedHabit} />
       )}
     </>
   );

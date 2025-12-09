@@ -7,7 +7,6 @@ import { MultiValue, SingleValue } from "react-select";
 import { useAddHabit } from "@/features/habits/hooks/useAddHabit";
 import { useAreas } from "@/features/areas/hooks/useAreas";
 import { useEditHabit } from "@/features/habits/hooks/useEditHabit";
-import { useHabitById } from "@/features/habits/hooks/useHabitById";
 
 import CustomButton from "@ui/CustomButton/CustomButton";
 import CustomSelector from "@ui/CustomSelector/CustomSelector";
@@ -21,14 +20,15 @@ import { SelectOption } from "@/types/SelectOption";
 import { daysOfMonth, daysOfWeek } from "@/utils/daysUtils";
 
 import "./habitmodal.css";
+import { Habit } from "@/types/Habit";
 
 type Frequency = "daily" | "weekly" | "monthly";
 
 interface HabitModalFormProps {
   modalType: "add" | "edit";
+  habitToEdit?: Habit | null;
   isModalOpen: boolean;
   closeModal: () => void;
-  habitId?: number;
 }
 
 interface FormData {
@@ -78,12 +78,9 @@ const habitSchema = yup.object().shape({
     .required("Days are required"),
 });
 
-const HabitModal = ({ modalType, isModalOpen, habitId, closeModal }: HabitModalFormProps) => {
+const HabitModal = ({ modalType, isModalOpen, closeModal, habitToEdit }: HabitModalFormProps) => {
   const { mutate: addHabit, isPending: addHabitPending } = useAddHabit();
   const { mutate: editHabit, isPending: editHabitPending } = useEditHabit();
-  const { data: habitById, isLoading: habitByIdIsLoading } = useHabitById(
-    modalType === "edit" && habitId ? habitId : undefined
-  );
   const { data: areas } = useAreas();
 
   const {
@@ -140,10 +137,10 @@ const HabitModal = ({ modalType, isModalOpen, habitId, closeModal }: HabitModalF
           closeModal();
         },
       });
-    } else if (modalType === "edit" && habitId) {
+    } else if (modalType === "edit" && habitToEdit) {
       editHabit(
         {
-          habitId: habitId,
+          habitId: habitToEdit.id,
           habitName: habitData.habitName,
           frequency: habitData.frequency,
           days: habitData.days,
@@ -159,12 +156,12 @@ const HabitModal = ({ modalType, isModalOpen, habitId, closeModal }: HabitModalF
   };
 
   useEffect(() => {
-    if (modalType === "edit" && habitId && isModalOpen && habitById && !habitByIdIsLoading) {
+    if (modalType === "edit" && isModalOpen && habitToEdit) {
       reset({
-        habit_name: habitById.habit_name,
-        frequency: frequencyOptions.find((option) => option.value === habitById.frequency) || frequencyOptions[0], //potem to zmienic
-        days: habitById.days,
-        areas: habitById.habit_areas.map((habit_area) => ({
+        habit_name: habitToEdit.habit_name,
+        frequency: frequencyOptions.find((option) => option.value === habitToEdit.frequency),
+        days: habitToEdit.days,
+        areas: habitToEdit.habit_areas.map((habit_area) => ({
           value: String(habit_area.area_id),
           label: habit_area.areas.area_name,
         })),
@@ -172,7 +169,7 @@ const HabitModal = ({ modalType, isModalOpen, habitId, closeModal }: HabitModalF
     } else if (modalType === "add" && isModalOpen) {
       reset();
     }
-  }, [isModalOpen, habitId, modalType, reset, habitById, habitByIdIsLoading]);
+  }, [habitToEdit, isModalOpen, modalType, reset]);
 
   const modalCancelAction = () => {
     closeModal();

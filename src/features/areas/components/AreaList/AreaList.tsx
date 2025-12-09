@@ -6,8 +6,8 @@ import "./arealist.css";
 
 interface AreaListProps {
   areas: Area[] | undefined;
-  onDelete?: (areaId: number) => void;
-  onEdit?: (areaId: number) => void;
+  onDelete?: (area: Area) => void;
+  onEdit?: (area: Area) => void;
 }
 
 const AreaList = ({ areas, onDelete, onEdit }: AreaListProps) => {
@@ -19,7 +19,7 @@ const AreaList = ({ areas, onDelete, onEdit }: AreaListProps) => {
             areaName={area.area_name}
             habitsCount={area.habits_count}
             key={area.id}
-            id={area.id}
+            area={area}
             onDelete={onDelete}
             onEdit={onEdit}
           />

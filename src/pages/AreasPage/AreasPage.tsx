@@ -12,7 +12,7 @@ import { useAreasActions } from "@/features/areas/hooks/useAreasActions";
 
 const AreasPage = () => {
   const { data: areas, isLoading: areasIsLoading, isError: areasIsError, refetch: refetchAreas } = useAreas();
-  const { openDeleteAreaModal, openEditAreaModal, selectedAreaId, isOpen, modalType, openAddAreaModal, closeModal } =
+  const { openDeleteAreaModal, openEditAreaModal, isOpen, modalType, openAddAreaModal, closeModal, selectedArea } =
     useAreasActions();
 
   return (
@@ -35,7 +35,12 @@ const AreasPage = () => {
         </AreaStateHandler>
       </Card>
 
-      <AreasModalManager modalType={modalType} isModalOpen={isOpen} closeModal={closeModal} areaId={selectedAreaId} />
+      <AreasModalManager
+        modalType={modalType}
+        isModalOpen={isOpen}
+        closeModal={closeModal}
+        selectedArea={selectedArea}
+      />
     </div>
   );
 };

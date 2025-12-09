@@ -1,22 +1,24 @@
 import { useModalContext } from "@/hooks/useModalContext";
+import { Area } from "@/types/Area";
 import { useState } from "react";
 
 export const useAreasActions = () => {
   const { openModal, closeModal, isOpen, modalType } = useModalContext();
-  const [selectedAreaId, setSelectedAreaId] = useState<number | undefined>(undefined);
+  const [selectedArea, setSelectedArea] = useState<Area | null>(null);
 
-  const openDeleteAreaModal = (areaId: number) => {
-    setSelectedAreaId(areaId);
+  const openDeleteAreaModal = (area: Area) => {
+    setSelectedArea(area);
     openModal("delete");
   };
 
-  const openEditAreaModal = (areaId: number) => {
-    setSelectedAreaId(areaId);
+  const openEditAreaModal = (area: Area) => {
+    setSelectedArea(area);
     openModal("edit");
   };
 
   const openAddAreaModal = () => {
     openModal("add");
+    setSelectedArea(null);
   };
 
   return {
@@ -25,7 +27,7 @@ export const useAreasActions = () => {
     isOpen,
     modalType,
     closeModal,
+    selectedArea,
     openEditAreaModal,
-    selectedAreaId,
   };
 };

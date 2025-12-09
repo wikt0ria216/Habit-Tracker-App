@@ -30,15 +30,8 @@ const HomePage = () => {
   const [selectedFilter, setSelectedFilter] = useState<SelectOption>(DEAFULT_FILTER);
 
   const { data: habits, isLoading: habitsIsLoading, isError: habitsIsError, refetch: refetchHabits } = useHabits();
-  const {
-    openEditHabitModal,
-    openDeleteHabitModal,
-    isOpen,
-    openAddHabitModal,
-    selectedHabitId,
-    closeModal,
-    modalType,
-  } = useHabitsActions();
+  const { openEditHabitModal, openDeleteHabitModal, isOpen, openAddHabitModal, selectedHabit, closeModal, modalType } =
+    useHabitsActions();
   const { data: areas } = useAreas();
   const { filteredHabits: todayHabits } = useFilteredHabitsByDate({ habits, dateOption: "today" });
   const { filteredHabits: tomorrowHabits } = useFilteredHabitsByDate({ habits, dateOption: "tomorrow" });
@@ -143,7 +136,7 @@ const HomePage = () => {
         modalType={modalType}
         isModalOpen={isOpen}
         closeModal={closeModal}
-        habitId={selectedHabitId}
+        selectedHabit={selectedHabit}
       />
     </div>
   );

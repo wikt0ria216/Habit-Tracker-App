@@ -8,15 +8,17 @@ import { ThreeDotsVertical, Edit, Trash } from "@/assets/icons";
 import "./habititem.css";
 import CustomCheckbox from "@/components/ui/CustomCheckbox/CustomCheckbox";
 import { useCompleteHabit } from "../../hooks/useCompleteHabit";
+import { Habit } from "@/types/Habit";
 
 interface HabitItemProps {
   id: number;
   name: string;
   isCompleted?: boolean;
   areas: string[];
-  onEdit?: (habitId: number) => void;
-  onDelete?: (habitId: number) => void;
+  onEdit?: (habit: Habit) => void;
+  onDelete?: (habit: Habit) => void;
   isReadOnly?: boolean;
+  habit?: Habit;
   ignoreCompletedStyle?: boolean;
   showActions?: boolean;
   showCheckbox?: boolean;
@@ -29,6 +31,7 @@ const HabitItem = forwardRef<HTMLDivElement, HabitItemProps>(
       isCompleted = false,
       areas,
       onEdit,
+      habit,
       onDelete,
       ignoreCompletedStyle = false,
       isReadOnly = false,
@@ -42,8 +45,8 @@ const HabitItem = forwardRef<HTMLDivElement, HabitItemProps>(
         label: "Edit",
         icon: <Edit />,
         action: () => {
-          if (onEdit) {
-            onEdit(id);
+          if (onEdit && habit) {
+            onEdit(habit);
           }
         },
         ariaLabel: `Edit habit ${name}`,
@@ -52,8 +55,8 @@ const HabitItem = forwardRef<HTMLDivElement, HabitItemProps>(
         label: "Delete",
         icon: <Trash />,
         action: () => {
-          if (onDelete) {
-            onDelete(id);
+          if (onDelete && habit) {
+            onDelete(habit);
           }
         },
         ariaLabel: `Delete habit ${name}`,
