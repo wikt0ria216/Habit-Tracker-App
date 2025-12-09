@@ -62,8 +62,10 @@ const AreaModal = ({ modalType, isModalOpen, closeModal, areaToEdit }: AreaModal
       editArea(
         { areaId: areaToEdit.id, areaName: areaName },
         {
-          onSuccess: () => {
-            closeModal();
+          onSuccess: (hasChanges) => {
+            if (hasChanges) {
+              closeModal();
+            }
           },
         }
       );

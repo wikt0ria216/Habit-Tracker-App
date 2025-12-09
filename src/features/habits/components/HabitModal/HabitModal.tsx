@@ -124,31 +124,36 @@ const HabitModal = ({ modalType, isModalOpen, closeModal, habitToEdit }: HabitMo
     const { habit_name, frequency, days, areas: selectedAreas } = data;
     const areasIds = selectedAreas.map((area) => parseInt(area.value));
 
-    const habitData = {
-      habitName: habit_name,
-      frequency: frequency?.value ?? "daily",
-      days,
-      areasIds,
-    };
-
     if (modalType === "add") {
-      addHabit(habitData, {
-        onSuccess: () => {
-          closeModal();
-        },
-      });
-    } else if (modalType === "edit" && habitToEdit) {
-      editHabit(
+      addHabit(
         {
-          habitId: habitToEdit.id,
-          habitName: habitData.habitName,
-          frequency: habitData.frequency,
-          days: habitData.days,
-          areasIds: habitData.areasIds,
+          habitName: habit_name,
+          frequency: frequency?.value ?? "daily",
+          days,
+          areasIds,
         },
         {
           onSuccess: () => {
             closeModal();
+          },
+        }
+      );
+    } else if (modalType === "edit" && habitToEdit) {
+      editHabit(
+        {
+          habitId: habitToEdit.id,
+          data: {
+            habitName: habit_name,
+            frequency: frequency?.value ?? "daily",
+            days,
+            areasIds,
+          },
+        },
+        {
+          onSuccess: (hasChanges) => {
+            if (hasChanges) {
+              closeModal();
+            }
           },
         }
       );
