@@ -3,10 +3,19 @@ import { Area } from "@/types/Area";
 import { supabase } from "@/supabase/supabaseClient";
 import { useAuthContext } from "@/features/authentication/hooks/useAuthContext";
 
-const fetchAreas = async (userId: string | undefined): Promise<Area[]> => {
+const fetchAreas = async (userId: string): Promise<Area[]> => {
   const { data, error } = await supabase
     .from("areas")
-    .select("id, area_name, user_id, habits_count:habit_areas(count)")
+    .select(
+      `
+      id,
+      area_name,
+      user_id,
+      created_at,
+      updated_at,
+      habits_count:habit_areas(count)
+    `
+    )
     .eq("user_id", userId)
     .order("created_at", { ascending: true });
 
@@ -14,15 +23,13 @@ const fetchAreas = async (userId: string | undefined): Promise<Area[]> => {
     throw error;
   }
 
-  const mappedData = data.map((area) => ({
-    id: area.id,
-    area_name: area.area_name,
-    user_id: area.user_id,
-    habits_count: area.habits_count[0]?.count || 0,
-  })) as Area[];
+  const returnedData = data.map((area) => ({
+    ...area,
+    habits_count: area.habits_count?.[0]?.count ?? 0,
+  }));
 
   return new Promise((resolve) => {
-    setTimeout(() => resolve(mappedData), 400);
+    setTimeout(() => resolve(returnedData), 400);
   });
 };
 
@@ -31,7 +38,13 @@ export const useAreas = () => {
 
   const queryResult = useQuery({
     queryKey: ["areas", user?.id],
-    queryFn: () => fetchAreas(user?.id),
+    queryFn: () => {
+      if (!user) {
+        throw new Error("User not authenticated or not found");
+      }
+
+      return fetchAreas(user.id);
+    },
     enabled: !!user?.id,
   });
   return queryResult;

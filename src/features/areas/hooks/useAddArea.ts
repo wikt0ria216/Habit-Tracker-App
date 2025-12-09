@@ -1,16 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/supabase/supabaseClient";
 import { toast } from "react-toastify";
+import { useAuthContext } from "@/features/authentication/hooks/useAuthContext";
 
-export const addArea = async (areaName: string): Promise<void> => {
-  const { data: userData, error: userError } = await supabase.auth.getUser();
-
-  if (userError || !userData.user.id) {
-    throw new Error("User not authenticated or not found");
-  }
-
-  const userId = userData.user.id;
-
+export const addArea = async (userId: string, areaName: string): Promise<void> => {
   const { data: existingAreas, error: checkError } = await supabase
     .from("areas")
     .select("area_name")
@@ -23,15 +16,15 @@ export const addArea = async (areaName: string): Promise<void> => {
   }
 
   if (existingAreas) {
-    throw new Error("A habit with this name already exists");
+    throw new Error("Area with this name already exists.");
   }
 
-  const data = {
+  const areaData = {
     area_name: areaName,
     user_id: userId,
   };
 
-  const { error } = await supabase.from("areas").insert([data]).select();
+  const { error } = await supabase.from("areas").insert([areaData]).select().single();
 
   if (error) {
     throw error;
@@ -40,15 +33,21 @@ export const addArea = async (areaName: string): Promise<void> => {
 
 export const useAddArea = () => {
   const queryClient = useQueryClient();
+  const { user } = useAuthContext();
 
   return useMutation({
-    mutationFn: addArea,
-    onSuccess: async () => {
-      const { data: userData } = await supabase.auth.getUser();
-      const userId = userData.user?.id;
+    mutationFn: (areaName: string) => {
+      if (!user) {
+        throw new Error("User not authenticated or not found");
+      }
 
-      await queryClient.invalidateQueries({ queryKey: ["areas", userId] });
-      toast.success("New area created");
+      return addArea(user.id, areaName);
+    },
+    onSuccess: () => {
+      if (user) {
+        queryClient.invalidateQueries({ queryKey: ["areas", user?.id] });
+        toast.success("New area created");
+      }
     },
   });
 };

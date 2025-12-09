@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/supabase/supabaseClient";
 import { toast } from "react-toastify";
+import { useAuthContext } from "@/features/authentication/hooks/useAuthContext";
 
 interface HabitData {
   habitName: string;
@@ -9,13 +10,8 @@ interface HabitData {
   areasIds: number[];
 }
 
-const addHabit = async ({ habitName, frequency, days, areasIds }: HabitData): Promise<void> => {
-  const { data: userData, error: userError } = await supabase.auth.getUser();
-  if (userError || !userData.user.id) {
-    throw new Error("User not authenticated or not found");
-  }
-
-  const userId = userData.user.id;
+const addHabit = async (data: HabitData, userId: string): Promise<void> => {
+  const { habitName, frequency, days, areasIds } = data;
 
   const { data: existingHabit, error: checkError } = await supabase
     .from("habits")
@@ -29,10 +25,10 @@ const addHabit = async ({ habitName, frequency, days, areasIds }: HabitData): Pr
   }
 
   if (existingHabit) {
-    throw new Error("A habit with this name already exists");
+    throw new Error("Habit with this name already exists");
   }
 
-  const data = {
+  const habitData = {
     habit_name: habitName,
     is_completed: false,
     frequency: frequency,
@@ -40,7 +36,7 @@ const addHabit = async ({ habitName, frequency, days, areasIds }: HabitData): Pr
     user_id: userId,
   };
 
-  const { data: newHabit, error: newHabitError } = await supabase.from("habits").insert([data]).select().single();
+  const { data: newHabit, error: newHabitError } = await supabase.from("habits").insert([habitData]).select().single();
   if (newHabitError) {
     throw newHabitError;
   }
@@ -61,14 +57,21 @@ const addHabit = async ({ habitName, frequency, days, areasIds }: HabitData): Pr
 
 export const useAddHabit = () => {
   const queryClient = useQueryClient();
+  const { user } = useAuthContext();
 
   return useMutation({
-    mutationFn: addHabit,
-    onSuccess: async () => {
-      const { data: userData } = await supabase.auth.getUser();
-      const userId = userData.user?.id;
-      await queryClient.invalidateQueries({ queryKey: ["habits", userId] });
-      toast.success("New Habit Created");
+    mutationFn: (data: HabitData) => {
+      if (!user) {
+        throw new Error("User not authenticated or not found");
+      }
+
+      return addHabit(data, user.id);
+    },
+    onSuccess: () => {
+      if (user) {
+        queryClient.invalidateQueries({ queryKey: ["habits", user.id] });
+        toast.success("New Habit Created");
+      }
     },
   });
 };
