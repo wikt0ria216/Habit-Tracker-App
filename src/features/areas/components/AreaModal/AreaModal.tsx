@@ -25,7 +25,11 @@ interface FormData {
 }
 
 const areaSchema = yup.object({
-  areaName: yup.string().required("Area name is required").min(2, "Area name must be at least 2 characters"),
+  areaName: yup
+    .string()
+    .required("Area name is required")
+    .min(2, "Area name must be at least 2 characters long")
+    .max(50, "Area name cannot exceed 50 characters"),
 });
 
 const AreaModal = ({ modalType, isModalOpen, areaId, closeModal }: AreaModalFormProps) => {
