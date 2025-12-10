@@ -18,8 +18,16 @@ const SUPPORTED_FORMATS = ["image/jpeg", "image/png", "image/jpg"];
 const FILE_SIZE = 2000000;
 
 const schema = yup.object().shape({
-  firstName: yup.string().optional(),
-  lastName: yup.string().optional(),
+  firstName: yup
+    .string()
+    .optional()
+    .min(2, "First name must be at least 2 characters long")
+    .max(50, "First name cannot exceed 50 characters"),
+  lastName: yup
+    .string()
+    .optional()
+    .min(2, "Last name must be at least 2 characters long")
+    .max(50, "Last name cannot exceed 50 characters"),
   avatar: yup
     .mixed<File>()
     .optional()

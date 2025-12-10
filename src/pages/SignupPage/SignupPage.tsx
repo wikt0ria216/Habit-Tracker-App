@@ -20,14 +20,22 @@ interface RegisterFormValues {
 }
 
 const registerSchema = yup.object().shape({
-  firstName: yup.string().trim().required("Frist name is required"),
-  lastName: yup.string().trim().required("Last name is required"),
+  firstName: yup
+    .string()
+    .required("First name is required")
+    .min(2, "First name must be at least 2 characters long")
+    .max(50, "First name cannot exceed 50 characters"),
+  lastName: yup
+    .string()
+    .required("Last name is required")
+    .min(2, "Last name must be at least 2 characters long")
+    .max(50, "Last name cannot exceed 50 characters"),
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup
     .string()
-    .min(8, "Password must be 8 characters long")
-    .matches(/[a-z]/, "Password requires at least one lowercase letter")
-    .matches(/[A-Z]/, "Password requires at least one uppercase letter")
+    .min(8, "Password must be at least 8 characters long")
+    .matches(/[a-z]/, "Password must contain at least one lowercase letter")
+    .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
     .matches(/\d/, "Password must contain at least one digit")
     .required("Password is required"),
 });
