@@ -114,10 +114,10 @@ const HabitModal = ({ modalType, isModalOpen, closeModal, habitToEdit }: HabitMo
   const handleFrequencyChange = (newValue: SingleValue<SelectOption>) => {
     if (!newValue) return;
 
-    setValue("frequency", newValue, { shouldValidate: true });
-    setValue("days", [], { shouldValidate: true });
+    setValue("frequency", newValue);
+    setValue("days", []);
     if (newValue.value === "daily") {
-      setValue("days", daysOfWeek, { shouldValidate: true });
+      setValue("days", daysOfWeek);
     }
   };
 
