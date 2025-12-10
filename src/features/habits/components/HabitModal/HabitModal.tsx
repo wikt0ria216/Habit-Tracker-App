@@ -33,7 +33,7 @@ interface HabitModalFormProps {
 
 interface FormData {
   habit_name: string;
-  frequency: SelectOption | null;
+  frequency: SelectOption;
   areas: SelectOption[] | [];
   days: string[];
 }
@@ -71,9 +71,8 @@ const habitSchema = yup.object().shape({
     .array()
     .of(yup.string().required())
     .when("frequency", {
-      is: (freq: SelectOption | null) => freq?.value === "daily",
-      then: (schema) => schema.min(7, "All days are required for daily frequency"),
-      otherwise: (schema) => schema.min(1, "At least one day is required"),
+      is: (freq: SelectOption) => freq.value === "weekly" || freq.value === "monthly",
+      then: (schema) => schema.min(1, "At least one day is required"),
     })
     .required("Days are required"),
 });
@@ -95,14 +94,14 @@ const HabitModal = ({ modalType, isModalOpen, closeModal, habitToEdit }: HabitMo
     resolver: yupResolver<FormData>(habitSchema),
     defaultValues: {
       habit_name: "",
-      frequency: null,
+      frequency: { value: "daily", label: "Daily" },
       areas: [],
-      days: [],
+      days: daysOfWeek,
     },
     mode: "onChange",
   });
 
-  const frequencyValue = watch("frequency")?.value as Frequency | null;
+  const frequencyValue = watch("frequency").value as Frequency;
 
   const areaOptions: SelectOption[] = useMemo(() => {
     const options = areas?.map((area) => ({
@@ -113,22 +112,24 @@ const HabitModal = ({ modalType, isModalOpen, closeModal, habitToEdit }: HabitMo
   }, [areas]);
 
   const handleFrequencyChange = (newValue: SingleValue<SelectOption>) => {
+    if (!newValue) return;
+
     setValue("frequency", newValue, { shouldValidate: true });
     setValue("days", [], { shouldValidate: true });
-    if (newValue?.value === "daily") {
+    if (newValue.value === "daily") {
       setValue("days", daysOfWeek, { shouldValidate: true });
     }
   };
 
   const onFormSubmit = (data: FormData) => {
     const { habit_name, frequency, days, areas: selectedAreas } = data;
-    const areasIds = selectedAreas.map((area) => parseInt(area.value));
+    const areasIds = (selectedAreas ?? []).map((area) => parseInt(area.value));
 
     if (modalType === "add") {
       addHabit(
         {
           habitName: habit_name,
-          frequency: frequency?.value ?? "daily",
+          frequency: frequency.value,
           days,
           areasIds,
         },
@@ -144,7 +145,7 @@ const HabitModal = ({ modalType, isModalOpen, closeModal, habitToEdit }: HabitMo
           habitId: habitToEdit.id,
           data: {
             habitName: habit_name,
-            frequency: frequency?.value ?? "daily",
+            frequency: frequency.value,
             days,
             areasIds,
           },
@@ -172,7 +173,12 @@ const HabitModal = ({ modalType, isModalOpen, closeModal, habitToEdit }: HabitMo
         })),
       });
     } else if (modalType === "add" && isModalOpen) {
-      reset();
+      reset({
+        habit_name: "",
+        frequency: { value: "daily", label: "Daily" },
+        areas: [],
+        days: daysOfWeek,
+      });
     }
   }, [habitToEdit, isModalOpen, modalType, reset]);
 
@@ -232,35 +238,30 @@ const HabitModal = ({ modalType, isModalOpen, closeModal, habitToEdit }: HabitMo
               </>
             )}
           />
-          {frequencyValue && (
-            <>
-              <div
-                className={`frequency-day-picker ${frequencyValue === "monthly" ? "frequency-day-picker-center" : ""}`}
-              >
-                <Controller
-                  name="days"
-                  control={control}
-                  render={({ field }) => (
-                    <DayPicker
-                      days={frequencyValue === "monthly" ? daysOfMonth : daysOfWeek}
-                      isMonthly={frequencyValue === "monthly"}
-                      selectedDays={field.value}
-                      onDayChange={(day) => {
-                        const currentDays = field.value;
-                        const newDays = currentDays.includes(day)
-                          ? currentDays.filter((d) => d !== day)
-                          : [...currentDays, day];
 
-                        field.onChange(newDays);
-                      }}
-                      isOptionDisabled={frequencyValue === "daily"}
-                      error={errors.days?.message}
-                    />
-                  )}
+          <div className={`frequency-day-picker ${frequencyValue === "monthly" ? "frequency-day-picker-center" : ""}`}>
+            <Controller
+              name="days"
+              control={control}
+              render={({ field }) => (
+                <DayPicker
+                  days={frequencyValue === "monthly" ? daysOfMonth : daysOfWeek}
+                  isMonthly={frequencyValue === "monthly"}
+                  selectedDays={field.value}
+                  onDayChange={(day) => {
+                    const currentDays = field.value;
+                    const newDays = currentDays.includes(day)
+                      ? currentDays.filter((d) => d !== day)
+                      : [...currentDays, day];
+
+                    field.onChange(newDays);
+                  }}
+                  isOptionDisabled={frequencyValue === "daily"}
+                  error={errors.days?.message}
                 />
-              </div>
-            </>
-          )}
+              )}
+            />
+          </div>
         </div>
 
         <div className="areas-select">
