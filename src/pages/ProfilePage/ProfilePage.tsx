@@ -74,8 +74,8 @@ const ProfilePage = () => {
   useEffect(() => {
     if (userProfile) {
       reset({
-        firstName: userProfile.first_name ?? "",
-        lastName: userProfile.last_name ?? "",
+        firstName: userProfile.first_name,
+        lastName: userProfile.last_name,
         avatar: null,
       });
     }
@@ -113,8 +113,8 @@ const ProfilePage = () => {
 
     if (userProfile) {
       reset({
-        firstName: userProfile.first_name ?? "",
-        lastName: userProfile.last_name ?? "",
+        firstName: userProfile.first_name,
+        lastName: userProfile.last_name,
         avatar: null,
       });
     }
