@@ -97,7 +97,7 @@ const HomePage = () => {
                   : `No habits assigned to "${activeTab}" for today.`
               }
               loadingLabel="Loading the list of habits uncompleted today."
-              retry={refetchHabits}
+              onRetry={refetchHabits}
             >
               <HabitList habits={notCompletedHabits} onEdit={openEditHabitModal} onDelete={openDeleteHabitModal} />
             </HabitStateHandler>
@@ -115,7 +115,7 @@ const HomePage = () => {
                   : `No completed habits in "${activeTab}" for today.`
               }
               loadingLabel="Loading the list of habits completed today"
-              retry={refetchHabits}
+              onRetry={refetchHabits}
             >
               <HabitList habits={completedHabits} onEdit={openEditHabitModal} onDelete={openDeleteHabitModal} />
             </HabitStateHandler>
@@ -132,7 +132,7 @@ const HomePage = () => {
               isError={habitsIsError}
               emptyMessage="No habits for tomorrow"
               loadingLabel="Loading tomorrow's list of habits"
-              retry={refetchHabits}
+              onRetry={refetchHabits}
             >
               <HabitList habits={tomorrowHabits} isReadOnly />
             </HabitStateHandler>

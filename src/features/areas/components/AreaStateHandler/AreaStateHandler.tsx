@@ -10,7 +10,7 @@ interface AreaStateHandlerProps {
   errorMessage?: string;
   children: ReactNode;
   loadingLoader?: string;
-  retry?: () => void;
+  onRetry: () => void;
 }
 
 const AreaStateHandler = ({
@@ -20,7 +20,7 @@ const AreaStateHandler = ({
   emptyMessage,
   errorMessage,
   loadingLoader,
-  retry,
+  onRetry,
   children,
 }: AreaStateHandlerProps) => {
   return (
@@ -32,7 +32,7 @@ const AreaStateHandler = ({
       emptyMessage={emptyMessage}
       errorMessage={errorMessage ? errorMessage : "Failed to load areas. Try again later."}
       loadingLabel={loadingLoader}
-      retry={retry}
+      onRetry={onRetry}
     >
       {children}
     </StateHandler>
