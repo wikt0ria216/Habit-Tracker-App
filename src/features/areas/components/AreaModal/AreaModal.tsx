@@ -78,7 +78,9 @@ const AreaModal = ({ modalType, isModalOpen, closeModal, areaToEdit }: AreaModal
         areaName: areaToEdit.area_name,
       });
     } else if (modalType === "add" && isModalOpen) {
-      reset();
+      reset({
+        areaName: "",
+      });
     }
   }, [isModalOpen, modalType, reset, areaToEdit]);
 
