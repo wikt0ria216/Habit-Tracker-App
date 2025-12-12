@@ -29,7 +29,7 @@ const AreasPage = () => {
           areas={areas}
           emptyMessage="No areas added yet."
           loadingLoader="Loading areas content."
-          retry={refetchAreas}
+          onRetry={refetchAreas}
         >
           <AreaList areas={areas} onDelete={openDeleteAreaModal} onEdit={openEditAreaModal} />
         </AreaStateHandler>

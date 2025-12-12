@@ -36,7 +36,7 @@ const HabitsPage = () => {
           isLoading={isHabitsLoading}
           emptyMessage="No habits added yet."
           loadingLabel="Loading habits content."
-          retry={refetchHabits}
+          onRetry={refetchHabits}
         >
           <HabitList
             habits={habits}

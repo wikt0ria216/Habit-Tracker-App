@@ -16,7 +16,7 @@ interface StateHandler<T> {
   children: ReactNode;
   centered?: boolean;
   loadingLabel?: string;
-  retry: () => void;
+  onRetry: () => void;
 }
 
 const StateHandler = <T,>({
@@ -28,7 +28,7 @@ const StateHandler = <T,>({
   skeletonCount = 5,
   skeletonProps = { height: 60, variant: "rounded" },
   skeletonGap = 16,
-  retry,
+  onRetry,
   children,
   loadingLabel = "Loading content",
   centered = false,
@@ -54,7 +54,7 @@ const StateHandler = <T,>({
       <div className={`state-handler-error-container ${centered ? "state-handler-centered" : ""}`} role="alert">
         <p className="state-handler-error">{errorMessage}</p>
 
-        <CustomButton onClick={retry} variant="accent">
+        <CustomButton onClick={onRetry} variant="accent">
           Try again
         </CustomButton>
       </div>
