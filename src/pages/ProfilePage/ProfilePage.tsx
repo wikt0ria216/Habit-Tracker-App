@@ -123,8 +123,8 @@ const ProfilePage = () => {
   if (isLoading) {
     return (
       <div className="profile">
-        <PageHeader title="User Profile" />
-        <Card title="Profile Information">
+        <PageHeader title="My Profile" />
+        <Card title="Personal Information">
           <ProfileSkeleton />
         </Card>
       </div>
