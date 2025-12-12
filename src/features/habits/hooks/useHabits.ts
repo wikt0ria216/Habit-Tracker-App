@@ -1,11 +1,11 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/supabase/supabaseClient";
 import { Habit } from "@/types/Habit";
-import { useAuthContext } from "@/features/authentication/hooks/useAuthContext";
 import { useEffect } from "react";
 import { getMillisecondsUntilMidnight } from "@/utils/getMillisecondsUntilMidnight";
+import { useAuthContext } from "@/features/authentication/hooks/useAuthContext";
 
-const fetchHabits = async (userId: string | undefined): Promise<Habit[]> => {
+const fetchHabits = async (userId: string): Promise<Habit[]> => {
   const { data, error } = await supabase
     .from("habits")
     .select("*, habit_areas(area_id, areas(id, area_name))")
@@ -29,7 +29,13 @@ export function useHabits() {
 
   const queryResult = useQuery({
     queryKey: ["habits", user?.id],
-    queryFn: () => fetchHabits(user?.id),
+    queryFn: () => {
+      if (!user) {
+        throw new Error("User not authenticated or not found");
+      }
+
+      return fetchHabits(user.id);
+    },
     enabled: !!user?.id,
   });
 

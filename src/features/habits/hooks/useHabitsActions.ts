@@ -1,31 +1,32 @@
 import { useModalContext } from "@/hooks/useModalContext";
+import { Habit } from "@/types/Habit";
 import { useState } from "react";
 
 export const useHabitsActions = () => {
-  const [selectedHabitId, setSelectedHabitId] = useState<number | undefined>(undefined);
+  const [selectedHabit, setSelectedHabit] = useState<Habit | null>(null);
   const { openModal, closeModal, modalType, isOpen } = useModalContext();
 
-  const openDeleteHabitModal = (habitId: number) => {
-    setSelectedHabitId(habitId);
+  const openDeleteHabitModal = (habit: Habit) => {
+    setSelectedHabit(habit);
     openModal("delete");
   };
 
-  const openEditHabitModal = (habitId: number) => {
-    setSelectedHabitId(habitId);
+  const openEditHabitModal = (habit: Habit) => {
+    setSelectedHabit(habit);
     openModal("edit");
   };
 
   const openAddHabitModal = () => {
+    setSelectedHabit(null);
     openModal("add");
   };
   return {
     openEditHabitModal,
     openDeleteHabitModal,
     openAddHabitModal,
-    selectedHabitId,
+    selectedHabit,
     closeModal,
     modalType,
     isOpen,
-    setSelectedHabitId,
   };
 };

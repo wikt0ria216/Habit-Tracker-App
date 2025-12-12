@@ -6,7 +6,7 @@ import "./deletemodal.css";
 interface DeleteModalProps {
   isModalOpen: boolean;
   closeModal: () => void;
-  resourceId?: number;
+  resourceId: number | null | undefined;
   onDelete: (id: number) => void;
   title: string;
   deleteText: string;
@@ -39,12 +39,7 @@ const DeleteModal = ({
           <CustomButton variant="secondary" onClick={closeModal}>
             Cancel
           </CustomButton>
-          <CustomButton
-            variant="danger"
-            onClick={onHandleDelete}
-            isLoading={isDeleting}
-            loadingMessage="Deleting"
-          >
+          <CustomButton variant="danger" onClick={onHandleDelete} isLoading={isDeleting} loadingMessage="Deleting">
             Delete
           </CustomButton>
         </>

@@ -1,110 +1,101 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/supabase/supabaseClient";
 import { toast } from "react-toastify";
+import { useAuthContext } from "@/features/authentication/hooks/useAuthContext";
 
-interface editHabitProps {
-  habitName: string;
-  frequency: string;
-  days: string[];
-  areasIds: number[];
-  habitId: number;
+interface EditHabitProps {
+  habitName?: string;
+  frequency?: string;
+  days?: string[];
+  areasIds?: number[];
 }
 
-export const editHabit = async ({ habitName, frequency, days, areasIds, habitId }: editHabitProps): Promise<void> => {
+interface HabitUpdateData {
+  habit_name?: string;
+  frequency?: string;
+  days?: string[];
+  updated_at: string;
+}
+
+export const editHabit = async (userId: string, habitId: number, data: EditHabitProps): Promise<boolean> => {
   //fetch current habit data
-  const { data: currentHabit, error: fetchHabitError } = await supabase
+  const { data: currentHabit, error: fetchCurrentError } = await supabase
     .from("habits")
-    .select("habit_name, frequency, days")
+    .select("habit_name, frequency, days, habit_areas(area_id)")
     .eq("id", habitId)
+    .eq("user_id", userId)
     .single();
 
   //throw error if fetching habit fails
-  if (fetchHabitError) {
-    throw fetchHabitError;
+  if (fetchCurrentError) {
+    throw fetchCurrentError;
   }
-
-  //Fetch current area-habits associations
-  const { data: currentHabitAreas, error: fetchAreasError } = await supabase
-    .from("habit_areas")
-    .select("area_id")
-    .eq("habit_id", habitId);
-
-  //throw error if fetching areas fails
-  if (fetchAreasError) {
-    throw fetchAreasError;
-  }
-
-  //extract current area IDs and sort them
-  const currentAreasIds = currentHabitAreas ? currentHabitAreas.map((area) => area.area_id).sort() : [];
-
-  //Sort provided area IDs
-  const sortedAreasIds = areasIds ? [...areasIds].sort() : [];
 
   //check if any data has changed
-  const isHabitUnchanged =
-    currentHabit.habit_name === habitName &&
-    currentHabit.frequency === frequency &&
-    JSON.stringify(currentHabit.days.sort()) === JSON.stringify(days.sort()) && // Compare sorted arrays
-    JSON.stringify(currentAreasIds) === JSON.stringify(sortedAreasIds);
+  const habitChanged =
+    (data.habitName !== undefined && currentHabit.habit_name !== data.habitName) ||
+    (data.frequency !== undefined && currentHabit.frequency !== data.frequency) ||
+    (data.days !== undefined &&
+      JSON.stringify([...currentHabit.days].sort()) !== JSON.stringify([...data.days].sort()));
 
-  // throw error if no changes are detected
-  if (isHabitUnchanged) {
-    throw new Error("No changes detected");
+  const currentAreaIds = currentHabit.habit_areas.map((ha) => ha.area_id).sort();
+  const areasChanged =
+    data.areasIds !== undefined && JSON.stringify([...data.areasIds].sort()) !== JSON.stringify(currentAreaIds);
+
+  if (!habitChanged && !areasChanged) {
+    return false;
   }
 
-  //Update habit data in the habits table
-  const { error: editError } = await supabase
-    .from("habits")
-    .update({
-      habit_name: habitName,
-      frequency,
-      days,
-    })
-    .eq("id", habitId)
-    .select()
-    .single();
+  if (habitChanged) {
+    const updateData: HabitUpdateData = {
+      updated_at: new Date().toISOString(),
+    };
 
-  //throw error if editing habit fails
+    if (data.habitName !== undefined) updateData.habit_name = data.habitName;
+    if (data.frequency !== undefined) updateData.frequency = data.frequency;
+    if (data.days !== undefined) updateData.days = data.days;
 
-  if (editError) {
-    throw editError;
+    const { error } = await supabase.from("habits").update(updateData).eq("id", habitId).eq("user_id", userId);
+    if (error) throw error;
   }
 
-  //Delete existing relations
-  const { error: deleteError } = await supabase.from("habit_areas").delete().eq("habit_id", habitId);
+  if (areasChanged) {
+    const { error: delErr } = await supabase.from("habit_areas").delete().eq("habit_id", habitId);
+    if (delErr) throw delErr;
 
-  //Throw error if deletion fails
-  if (deleteError) {
-    throw deleteError;
-  }
-
-  //add new habt-areas associations if they exist
-  if (areasIds && areasIds.length > 0) {
-    const habitAreasData = areasIds.map((areaId) => ({
-      habit_id: habitId,
-      area_id: areaId,
-    }));
-
-    //Insert new habit-area associations
-    const { error: areasError } = await supabase.from("habit_areas").insert(habitAreasData);
-
-    //Throw error if insertion fails
-    if (areasError) {
-      throw areasError;
+    if (data.areasIds && data.areasIds.length > 0) {
+      const { error: insErr } = await supabase
+        .from("habit_areas")
+        .insert(data.areasIds.map((id) => ({ habit_id: habitId, area_id: id })));
+      if (insErr) throw insErr;
     }
   }
+
+  return true;
 };
 
 export const useEditHabit = () => {
   const queryClient = useQueryClient();
+  const { user } = useAuthContext();
 
   return useMutation({
-    mutationFn: editHabit,
-    onSuccess: async () => {
-      const { data: userData } = await supabase.auth.getUser();
-      const userId = userData?.user?.id;
-      await queryClient.invalidateQueries({ queryKey: ["habits", userId]});
-      toast.success("Habit Edited");
+    mutationFn: ({ habitId, data }: { habitId: number; data: EditHabitProps }) => {
+      if (!user) {
+        throw new Error("User not authtenticated or not found");
+      }
+
+      return editHabit(user.id, habitId, data);
+    },
+    onSuccess: (hasChanges) => {
+      if (user) {
+        if (!hasChanges) {
+          return;
+        }
+
+        queryClient.invalidateQueries({ queryKey: ["habits", user?.id] });
+
+        toast.success("Habit edited");
+      }
     },
   });
 };

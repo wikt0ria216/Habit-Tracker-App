@@ -9,8 +9,8 @@ interface HabitListProps {
   ignoreCompletedStyle?: boolean;
   showActions?: boolean;
   showCheckbox?: boolean;
-  onDelete?: (habitId: number) => void;
-  onEdit?: (habitId: number) => void;
+  onDelete?: (habit: Habit) => void;
+  onEdit?: (habit: Habit) => void;
 }
 
 const HabitList = ({
@@ -33,6 +33,7 @@ const HabitList = ({
             areas={habit.habit_areas?.map((habit) => habit.areas.area_name)}
             onDelete={onDelete}
             id={habit.id}
+            habit={habit}
             isReadOnly={isReadOnly}
             ignoreCompletedStyle={ignoreCompletedStyle}
             showActions={showActions}

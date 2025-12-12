@@ -54,7 +54,7 @@ const ProfilePage = () => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const avatarInputRef = useRef<HTMLInputElement>(null);
   const {
-    formState: { errors, dirtyFields },
+    formState: { errors },
     control,
     watch,
     handleSubmit,
@@ -67,7 +67,7 @@ const ProfilePage = () => {
 
   const { data: userProfile, refetch, isError, isLoading } = useGetUser();
 
-  const updateProfileMutation = useUpdateProfile();
+  const { mutate: updateProfile, isPending: updateProfilePending } = useUpdateProfile();
 
   const avatarWatch = watch("avatar");
 
@@ -93,25 +93,17 @@ const ProfilePage = () => {
     }
   }, [avatarWatch]);
 
-  const handleFormSubmit = async (data: ProfileFormValues) => {
-    try {
-      const changedData: UpdateProfileData = {};
+  const handleFormSubmit =  (data: ProfileFormValues) => {
+    const dataToSend: UpdateProfileData = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+    };
 
-      if (dirtyFields.firstName) changedData.firstName = data.firstName;
-      if (dirtyFields.lastName) changedData.lastName = data.lastName;
-
-      if (dirtyFields.avatar && data.avatar) {
-        changedData.avatar = data.avatar;
-      }
-
-      if (Object.keys(changedData).length > 0) {
-        await updateProfileMutation.mutateAsync(changedData);
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(`Something went wrong: ${error.message}`);
-      }
+    if (data.avatar) {
+      dataToSend.avatar = data.avatar;
     }
+
+    updateProfile(dataToSend);
   };
 
   const handleCancel = () => {
@@ -238,7 +230,7 @@ const ProfilePage = () => {
             <CustomButton variant="secondary" onClick={handleCancel}>
               Cancel
             </CustomButton>
-            <CustomButton type="submit" isLoading={updateProfileMutation.isPending} loadingMessage="Saving">
+            <CustomButton type="submit" isLoading={updateProfilePending} loadingMessage="Saving">
               Save
             </CustomButton>
           </div>

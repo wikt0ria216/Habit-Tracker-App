@@ -2,23 +2,24 @@ import { Edit, Trash, ThreeDotsVertical } from "@assets/icons/index";
 import MenuDropdown from "@ui/MenuDropdown/MenuDropdown";
 
 import "./areaitem.css";
+import { Area } from "@/types/Area";
 
 interface AreaItemProps {
-  id: number;
   areaName: string;
-  onDelete?: (areaId: number) => void;
-  onEdit?: (areaId: number) => void;
+  onDelete?: (area: Area) => void;
+  onEdit?: (area: Area) => void;
   habitsCount?: number;
+  area?: Area;
 }
 
-const AreaItem = ({ areaName, habitsCount, onDelete, onEdit, id }: AreaItemProps) => {
+const AreaItem = ({ areaName, habitsCount, onDelete, onEdit, area }: AreaItemProps) => {
   const dropdownOptions = [
     {
       label: "Edit",
       icon: <Edit />,
       action: () => {
-        if (onEdit) {
-          onEdit(id);
+        if (onEdit && area) {
+          onEdit(area);
         }
       },
       ariaLabel: `Edit area ${areaName}`,
@@ -27,8 +28,8 @@ const AreaItem = ({ areaName, habitsCount, onDelete, onEdit, id }: AreaItemProps
       label: "Delete",
       icon: <Trash />,
       action: () => {
-        if (onDelete) {
-          onDelete(id);
+        if (onDelete && area) {
+          onDelete(area);
         }
       },
       ariaLabel: `Delete area ${areaName}`,

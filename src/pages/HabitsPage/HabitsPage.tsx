@@ -15,10 +15,10 @@ const HabitsPage = () => {
   const {
     openEditHabitModal,
     openDeleteHabitModal,
-    selectedHabitId,
     closeModal,
     isOpen,
     modalType,
+    selectedHabit,
     openAddHabitModal,
   } = useHabitsActions();
 
@@ -50,9 +50,9 @@ const HabitsPage = () => {
 
       <HabitModalsManager
         closeModal={closeModal}
-        habitId={selectedHabitId}
         isModalOpen={isOpen}
         modalType={modalType}
+        selectedHabit={selectedHabit}
       />
     </div>
   );

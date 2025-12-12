@@ -9,15 +9,15 @@ import Modal from "@ui/Modal/Modal";
 
 import { useAddArea } from "@/features/areas/hooks/useAddArea";
 import { useEditArea } from "@/features/areas/hooks/useEditArea";
-import { useAreaById } from "@/features/areas/hooks/useAreaById";
 
 import "./areamodal.css";
+import { Area } from "@/types/Area";
 
 interface AreaModalFormProps {
   modalType: "add" | "edit";
   isModalOpen: boolean;
   closeModal: () => void;
-  areaId?: number;
+  areaToEdit?: Area | null;
 }
 
 interface FormData {
@@ -32,7 +32,7 @@ const areaSchema = yup.object({
     .max(50, "Area name cannot exceed 50 characters"),
 });
 
-const AreaModal = ({ modalType, isModalOpen, areaId, closeModal }: AreaModalFormProps) => {
+const AreaModal = ({ modalType, isModalOpen, closeModal, areaToEdit }: AreaModalFormProps) => {
   const {
     handleSubmit,
     reset,
@@ -43,13 +43,11 @@ const AreaModal = ({ modalType, isModalOpen, areaId, closeModal }: AreaModalForm
     defaultValues: {
       areaName: "",
     },
+    mode: "onChange",
   });
 
   const { mutate: addArea, isPending: addAreaPending } = useAddArea();
   const { mutate: editArea, isPending: editAreaPending } = useEditArea();
-  const { data: areaById, isLoading: areaByIdIsLoading } = useAreaById(
-    modalType === "edit" && areaId ? areaId : undefined
-  );
 
   const onAreaFormSubmit = (data: FormData) => {
     const { areaName } = data;
@@ -60,12 +58,14 @@ const AreaModal = ({ modalType, isModalOpen, areaId, closeModal }: AreaModalForm
           closeModal();
         },
       });
-    } else if (modalType === "edit" && areaId) {
+    } else if (modalType === "edit" && areaToEdit) {
       editArea(
-        { areaId: areaId, areaName: areaName },
+        { areaId: areaToEdit.id, areaName: areaName },
         {
-          onSuccess: () => {
-            closeModal();
+          onSuccess: (hasChanges) => {
+            if (hasChanges) {
+              closeModal();
+            }
           },
         }
       );
@@ -73,14 +73,14 @@ const AreaModal = ({ modalType, isModalOpen, areaId, closeModal }: AreaModalForm
   };
 
   useEffect(() => {
-    if (modalType === "edit" && areaId && isModalOpen && areaById && !areaByIdIsLoading) {
+    if (modalType === "edit" && isModalOpen && areaToEdit) {
       reset({
-        areaName: areaById.area_name ?? "",
+        areaName: areaToEdit.area_name,
       });
     } else if (modalType === "add" && isModalOpen) {
       reset();
     }
-  }, [areaById, isModalOpen, areaId, modalType, reset, areaByIdIsLoading]);
+  }, [isModalOpen, modalType, reset, areaToEdit]);
 
   const modalCancelAction = () => {
     closeModal();

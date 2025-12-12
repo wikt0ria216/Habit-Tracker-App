@@ -8,8 +8,14 @@ interface CompleteHabitProps {
   isCompleted: boolean;
 }
 
-export const completeHabit = async ({ habitId, isCompleted }: CompleteHabitProps): Promise<void> => {
-  const { error } = await supabase.from("habits").update({ is_completed: isCompleted }).eq("id", habitId);
+export const completeHabit = async (data: CompleteHabitProps, userId: string): Promise<void> => {
+  const { habitId, isCompleted } = data;
+
+  const { error } = await supabase
+    .from("habits")
+    .update({ is_completed: isCompleted })
+    .eq("id", habitId)
+    .eq("user_id", userId);
   if (error) {
     throw error;
   }
@@ -20,7 +26,13 @@ export const useCompleteHabit = (habitId: number) => {
   const { user } = useAuthContext();
 
   return useMutation({
-    mutationFn: completeHabit,
+    mutationFn: (data: CompleteHabitProps) => {
+      if (!user) {
+        throw new Error("User not authenticated or not found");
+      }
+
+      return completeHabit(data, user.id);
+    },
 
     onMutate: async ({ isCompleted }) => {
       await queryClient.cancelQueries({ queryKey: ["habits", user?.id] });

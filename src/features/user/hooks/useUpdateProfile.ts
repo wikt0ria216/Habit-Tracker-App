@@ -1,3 +1,4 @@
+import { useAuthContext } from "@/features/authentication/hooks/useAuthContext";
 import { supabase } from "@/supabase/supabaseClient";
 import { User } from "@/types/User";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -9,26 +10,18 @@ interface UpdateProfileData {
   avatar?: File;
 }
 
-const updateProfile = async (data: UpdateProfileData): Promise<User | undefined> => {
-  const {
-    data: { user },
-    error: authError,
-  } = await supabase.auth.getUser();
+const updateProfile = async (userId: string, data: UpdateProfileData): Promise<{ user: User; hasChanges: boolean }> => {
+  const { data: currentUser, error: fetchError } = await supabase.from("users").select().eq("user_id", userId).single();
 
-  if (authError) {
-    throw authError;
-  }
-
-  if (!user) {
-    throw Error("User not authenticated");
-  }
+  if (fetchError) throw fetchError;
 
   let avatarUrl: string | undefined;
+  let avatarChanged = false;
 
   if (data.avatar) {
     const fileExt = data.avatar.name.split(".").pop();
-    const fileName = `${user.id}-avatar.${fileExt}`;
-    const filePath = `${user.id}/${fileName}`;
+    const fileName = `${userId}-avatar.${fileExt}`;
+    const filePath = `${userId}/${fileName}`;
 
     const { error: uploadError } = await supabase.storage.from("avatars").upload(filePath, data.avatar, {
       cacheControl: "3600",
@@ -44,43 +37,61 @@ const updateProfile = async (data: UpdateProfileData): Promise<User | undefined>
     } = supabase.storage.from("avatars").getPublicUrl(filePath);
 
     avatarUrl = `${publicUrl}?t=${Date.now()}`;
+    avatarChanged = true;
   }
 
-  const updateData: Partial<User> = {};
+  const firstNameChanged = data.firstName !== undefined && data.firstName !== currentUser.first_name;
+  const lastNameChanged = data.lastName !== undefined && data.lastName !== currentUser.last_name;
 
-  if (data.firstName !== undefined) updateData.first_name = data.firstName;
-  if (data.lastName !== undefined) updateData.last_name = data.lastName;
+  const hasChanges = firstNameChanged || lastNameChanged || avatarChanged;
 
-  if (avatarUrl) {
+  if (!hasChanges) {
+    return { user: currentUser, hasChanges: false };
+  }
+
+  const updateData: Partial<User> = {
+    updated_at: new Date().toISOString(),
+  };
+
+  if (firstNameChanged) updateData.first_name = data.firstName;
+  if (lastNameChanged) updateData.last_name = data.lastName;
+  if (avatarChanged && avatarUrl) {
     updateData.avatar_url = avatarUrl;
   }
 
-  if (Object.keys(updateData).length > 0) {
-    updateData.updated_at = new Date().toISOString();
+  const { data: updatedUser, error: updateError } = await supabase
+    .from("users")
+    .update(updateData)
+    .eq("user_id", userId)
+    .select()
+    .single();
 
-    const { data: editProfileData, error: editProfileError } = await supabase
-      .from("users")
-      .update(updateData)
-      .eq("user_id", user.id)
-      .select()
-      .single();
-
-    if (editProfileError) {
-      throw editProfileError;
-    }
-
-    return editProfileData;
+  if (updateError) {
+    throw updateError;
   }
+
+  return { user: updatedUser, hasChanges: true };
 };
 
 export const useUpdateProfile = () => {
+  const { user } = useAuthContext();
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: updateProfile,
+    mutationFn: (updates: UpdateProfileData) => {
+      if (!user) {
+        throw new Error("User not authenticated or not found");
+      }
+
+      return updateProfile(user.id, updates);
+    },
     onSuccess: (data) => {
-      if (data) {
-        queryClient.setQueryData(["user"], data);
+      if (user) {
+        if (!data.hasChanges) {
+          return;
+        }
+
+        queryClient.setQueryData(["user"], data.user);
         toast.success("Profile updated successfully");
       }
     },
