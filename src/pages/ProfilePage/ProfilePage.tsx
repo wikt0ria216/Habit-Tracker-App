@@ -9,9 +9,10 @@ import FormInput from "@/components/form/FormInput/FormInput";
 import { useGetUser } from "@/features/user/hooks/useGetUser";
 import { useUpdateProfile } from "@/features/user/hooks/useUpdateProfile";
 import ProfileSkeleton from "@/features/user/components/ProfileSkeleton/ProfileSkeleton";
-import ProfileError from "@/features/user/components/ProfileError/ProfileError";
 
 import "./profilepage.css";
+import StateHandler from "@/components/ui/StateHandler/StateHandler";
+import { User } from "@/types/User";
 
 const SUPPORTED_FORMATS = ["image/jpeg", "image/png", "image/jpg"];
 
@@ -93,7 +94,7 @@ const ProfilePage = () => {
     }
   }, [avatarWatch]);
 
-  const handleFormSubmit =  (data: ProfileFormValues) => {
+  const handleFormSubmit = (data: ProfileFormValues) => {
     const dataToSend: UpdateProfileData = {
       firstName: data.firstName,
       lastName: data.lastName,
@@ -120,121 +121,108 @@ const ProfilePage = () => {
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="profile">
-        <PageHeader title="My Profile" />
-        <Card title="Personal Information">
-          <ProfileSkeleton />
-        </Card>
-      </div>
-    );
-  }
-
-  if (isError) {
-    return (
-      <div className="profile">
-        <PageHeader title="My Profile" />
-        <Card title="Personal Information">
-          <ProfileError onRetry={refetch} />
-        </Card>
-      </div>
-    );
-  }
-
   return (
     <div className="profile">
       <PageHeader title="My Profile" />
       <Card title="Personal Information">
-        <form className="profile-form" onSubmit={handleSubmit(handleFormSubmit)}>
-          <Controller
-            name="avatar"
-            control={control}
-            render={({ field }) => (
-              <div className="profile-avatar">
-                <img
-                  className="profile-avatar-preview"
-                  src={previewUrl ?? userProfile?.avatar_url ?? "/user-img.png"}
-                  alt={
-                    previewUrl
-                      ? "Selected avatar preview"
-                      : userProfile?.avatar_url
-                      ? `${userProfile.first_name}'s avatar`
-                      : "Default avatar"
-                  }
-                />
-                <div className="profile-avatar-content">
-                  <div className="profile-avatar-controls">
-                    <CustomButton
-                      variant="secondary"
-                      onClick={() => avatarInputRef.current?.click()}
-                      ariaLabel="Upload avatar. JPG, JPEG or PNG, max 2MB"
-                    >
-                      Upload
-                    </CustomButton>
-                    <p className="profile-avatar-hint">JPG, JPEG or PNG (max 2MB)</p>
+        <StateHandler<User>
+          isLoading={isLoading}
+          isError={isError}
+          data={userProfile}
+          customSkeleton={<ProfileSkeleton />}
+          errorMessage="Failed to load profile. Please try again."
+          onRetry={refetch}
+        >
+          <form className="profile-form" onSubmit={handleSubmit(handleFormSubmit)}>
+            <Controller
+              name="avatar"
+              control={control}
+              render={({ field }) => (
+                <div className="profile-avatar">
+                  <img
+                    className="profile-avatar-preview"
+                    src={previewUrl ?? userProfile?.avatar_url ?? "/user-img.png"}
+                    alt={
+                      previewUrl
+                        ? "Selected avatar preview"
+                        : userProfile?.avatar_url
+                        ? `${userProfile.first_name}'s avatar`
+                        : "Default avatar"
+                    }
+                  />
+                  <div className="profile-avatar-content">
+                    <div className="profile-avatar-controls">
+                      <CustomButton
+                        variant="secondary"
+                        onClick={() => avatarInputRef.current?.click()}
+                        ariaLabel="Upload avatar. JPG, JPEG or PNG, max 2MB"
+                      >
+                        Upload
+                      </CustomButton>
+                      <p className="profile-avatar-hint">JPG, JPEG or PNG (max 2MB)</p>
+                    </div>
+                    {errors.avatar && (
+                      <span id="profile-avatar-error" className="profile-avatar-error" role="alert">
+                        {errors.avatar.message}
+                      </span>
+                    )}
                   </div>
-                  {errors.avatar && (
-                    <span id="profile-avatar-error" className="profile-avatar-error" role="alert">
-                      {errors.avatar.message}
-                    </span>
-                  )}
+                  <input
+                    type="file"
+                    id="image"
+                    ref={avatarInputRef}
+                    className="sr-only"
+                    accept="image/jpeg, image/png, image/jpg"
+                    aria-describedby={`${errors.avatar ? "profile-avatar-error" : ""}`}
+                    tabIndex={-1}
+                    onChange={(e) => {
+                      const selectedFile = e.target.files?.[0] || null;
+                      field.onChange(selectedFile);
+                    }}
+                    aria-invalid={!!errors.avatar}
+                  />
                 </div>
-                <input
-                  type="file"
-                  id="image"
-                  ref={avatarInputRef}
-                  className="sr-only"
-                  accept="image/jpeg, image/png, image/jpg"
-                  aria-describedby={`${errors.avatar ? "profile-avatar-error" : ""}`}
-                  tabIndex={-1}
-                  onChange={(e) => {
-                    const selectedFile = e.target.files?.[0] || null;
-                    field.onChange(selectedFile);
-                  }}
-                  aria-invalid={!!errors.avatar}
-                />
-              </div>
-            )}
-          />
-          <div className="profile-form-inputs">
-            <FormInput
-              placeholder="First Name"
-              label="First Name"
-              id="firstName"
-              autoComplete="off"
-              error={errors.firstName?.message}
-              {...register("firstName")}
+              )}
             />
-            <FormInput
-              placeholder="Last Name"
-              label="Last Name"
-              id="lastName"
-              autoComplete="off"
-              error={errors.lastName?.message}
-              {...register("lastName")}
-            />
-            <FormInput
-              placeholder="Email"
-              label="Email"
-              id="email"
-              type="email"
-              autoComplete="off"
-              isDisabled
-              readOnly
-              value={userProfile?.email ?? ""}
-            />
-          </div>
+            <div className="profile-form-inputs">
+              <FormInput
+                placeholder="First Name"
+                label="First Name"
+                id="firstName"
+                autoComplete="off"
+                error={errors.firstName?.message}
+                {...register("firstName")}
+              />
+              <FormInput
+                placeholder="Last Name"
+                label="Last Name"
+                id="lastName"
+                autoComplete="off"
+                error={errors.lastName?.message}
+                {...register("lastName")}
+              />
+              <FormInput
+                placeholder="Email"
+                label="Email"
+                id="email"
+                type="email"
+                autoComplete="off"
+                isDisabled
+                readOnly
+                value={userProfile?.email ?? ""}
+              />
+            </div>
 
-          <div className="profile-form-actions">
-            <CustomButton variant="secondary" onClick={handleCancel}>
-              Cancel
-            </CustomButton>
-            <CustomButton type="submit" isLoading={updateProfilePending} loadingMessage="Saving">
-              Save
-            </CustomButton>
-          </div>
-        </form>
+            <div className="profile-form-actions">
+              <CustomButton variant="secondary" onClick={handleCancel}>
+                Cancel
+              </CustomButton>
+              <CustomButton type="submit" isLoading={updateProfilePending} loadingMessage="Saving">
+                Save
+              </CustomButton>
+            </div>
+          </form>
+        </StateHandler>
       </Card>
     </div>
   );
