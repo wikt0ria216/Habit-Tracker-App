@@ -27,8 +27,7 @@ const AreasPage = () => {
           isLoading={areasIsLoading}
           isError={areasIsError}
           areas={areas}
-          emptyMessage="No areas added yet."
-          loadingLoader="Loading areas content."
+          emptyMessage="No areas yet. Create your first area to organize your habits."
           onRetry={refetchAreas}
         >
           <AreaList areas={areas} onDelete={openDeleteAreaModal} onEdit={openEditAreaModal} />
