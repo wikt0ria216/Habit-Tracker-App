@@ -7,19 +7,17 @@ interface AreaStateHandlerProps {
   isError: boolean;
   areas: Area[] | undefined;
   emptyMessage?: string;
-  errorMessage?: string;
   children: ReactNode;
   loadingLoader?: string;
-  onRetry: () => void;
+  onRetry?: () => void;
 }
 
 const AreaStateHandler = ({
   isLoading,
   isError,
   areas,
-  emptyMessage,
-  errorMessage,
-  loadingLoader,
+  emptyMessage = "No areas to display.",
+  loadingLoader = "Loading areas",
   onRetry,
   children,
 }: AreaStateHandlerProps) => {
@@ -28,9 +26,8 @@ const AreaStateHandler = ({
       isLoading={isLoading}
       isError={isError}
       data={areas}
-      centered
       emptyMessage={emptyMessage}
-      errorMessage={errorMessage ? errorMessage : "Failed to load areas. Try again later."}
+      errorMessage="Failed to load areas. Please try again."
       loadingLabel={loadingLoader}
       onRetry={onRetry}
     >
