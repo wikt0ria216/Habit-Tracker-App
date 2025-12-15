@@ -1,11 +1,3 @@
-.todays-habits-list,
-.completed-todays-habits-list,
-.upcoming-habits-list {
-  overflow-y: auto;
-  flex: 1;
-  height: 100%;
-}
-
 .content-grid-holder {
   display: grid;
   grid-template-columns: 1fr;
