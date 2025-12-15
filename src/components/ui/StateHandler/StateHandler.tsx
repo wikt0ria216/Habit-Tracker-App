@@ -1,22 +1,24 @@
 import { ReactNode } from "react";
-import "./statehandler.css";
-import CustomButton from "../CustomButton/CustomButton";
 import { SkeletonProps } from "../Skeleton/Skeleton";
 import SkeletonList from "../SkeletonList/SkeletonList";
+import EmptyState from "../EmptyState/EmptyState";
+import ErrorState from "../ErrorState/ErrorState";
+import CustomButton from "../CustomButton/CustomButton";
 
 interface StateHandler<T> {
   isLoading: boolean;
   isError: boolean;
   data: T[] | T | undefined;
-  emptyMessage?: string | JSX.Element | null;
-  errorMessage?: string | JSX.Element;
+  emptyMessage?: string;
+  errorMessage?: string;
   skeletonCount?: number;
   skeletonProps?: Omit<SkeletonProps, "isSingle" | "loadingMessage">;
   skeletonGap?: string | number;
+  customSkeleton?: ReactNode;
+  customError?: ReactNode;
   children: ReactNode;
-  centered?: boolean;
   loadingLabel?: string;
-  onRetry: () => void;
+  onRetry?: () => void;
 }
 
 const StateHandler = <T,>({
@@ -24,62 +26,62 @@ const StateHandler = <T,>({
   isError,
   data,
   emptyMessage,
-  errorMessage = "Something went wrong. Please try again.",
+  errorMessage,
   skeletonCount = 5,
   skeletonProps = { height: 60, variant: "rounded" },
   skeletonGap = 16,
+  customSkeleton,
+  customError,
   onRetry,
   children,
-  loadingLabel = "Loading content",
-  centered = false,
+  loadingLabel,
 }: StateHandler<T>) => {
   if (isLoading) {
-    //if the state is loading then display skeleton
+    if (customSkeleton) {
+      return <>{customSkeleton}</>;
+    }
     return (
-      <>
-        {
-          <SkeletonList
-            count={skeletonCount}
-            loadingMessage={loadingLabel}
-            skeletonProps={skeletonProps}
-            gap={skeletonGap}
-          />
-        }
-      </>
+      <SkeletonList
+        count={skeletonCount}
+        loadingMessage={loadingLabel}
+        skeletonProps={skeletonProps}
+        gap={skeletonGap}
+      />
     );
   }
+
   if (isError) {
-    //any error with the API - render error message
+    if (customError) {
+      return <>{customError}</>;
+    }
     return (
-      <div className={`state-handler-error-container ${centered ? "state-handler-centered" : ""}`} role="alert">
-        <p className="state-handler-error">{errorMessage}</p>
-
-        <CustomButton onClick={onRetry} variant="accent">
-          Try again
-        </CustomButton>
-      </div>
+      <ErrorState
+        message={errorMessage}
+        action={
+          onRetry && (
+            <CustomButton onClick={onRetry} variant="secondary">
+              Try again
+            </CustomButton>
+          )
+        }
+      />
     );
   }
 
-  if (!Array.isArray(data) && (data === null || data === undefined)) {
-    //if an object is not an array and is null or undefined - render error message
-    return (
-      <div className={`state-handler-error-container ${centered ? "state-handler-centered" : ""}`} role="alert">
-        <p className="state-handler-error">{errorMessage}</p>
-      </div>
-    );
+  const isArrayData = Array.isArray(data);
+
+  if (isArrayData) {
+    if (!Array.isArray(data)) {
+      return <ErrorState message="Invalid data type: expected array" />;
+    }
+
+    if (data.length === 0) {
+      return <EmptyState message={emptyMessage} />;
+    }
+
+    return <>{children}</>;
   }
 
-  if (Array.isArray(data) && data.length === 0 && emptyMessage !== null) {
-    //if an object is an array and is empty and has an empty message - render empty message
-    return (
-      <div className={centered ? "state-handler-centered" : ""}>
-        <p className="state-handler-empty">{emptyMessage}</p>
-      </div>
-    );
-  }
-
-  //if everything else is false, render the children
   return <>{children}</>;
 };
 
