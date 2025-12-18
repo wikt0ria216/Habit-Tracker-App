@@ -12,15 +12,8 @@ import HabitStateHandler from "@/features/habits/components/HabitStateHandler/Ha
 
 const HabitsPage = () => {
   const { data: habits, isLoading: isHabitsLoading, isError: isHabitsError, refetch: refetchHabits } = useHabits();
-  const {
-    openEditHabitModal,
-    openDeleteHabitModal,
-    closeModal,
-    isOpen,
-    modalType,
-    selectedHabit,
-    openAddHabitModal,
-  } = useHabitsActions();
+  const { openEditHabitModal, openDeleteHabitModal, closeModal, isOpen, modalType, selectedHabit, openAddHabitModal } =
+    useHabitsActions();
 
   return (
     <div className="habits-page">
@@ -34,8 +27,7 @@ const HabitsPage = () => {
           habits={habits}
           isError={isHabitsError}
           isLoading={isHabitsLoading}
-          emptyMessage="No habits added yet."
-          loadingLabel="Loading habits content."
+          emptyMessage="No habits yet. Create your first habit."
           onRetry={refetchHabits}
         >
           <HabitList

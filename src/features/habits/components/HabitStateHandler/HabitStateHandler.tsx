@@ -7,10 +7,9 @@ interface HabitStateHandlerProps {
   isLoading: boolean;
   isError: boolean;
   emptyMessage?: string;
-  errorMessage?: string;
   children: ReactNode;
   loadingLabel?: string;
-  onRetry: () => void;
+  onRetry?: () => void;
 }
 
 const HabitStateHandler = ({
@@ -18,10 +17,9 @@ const HabitStateHandler = ({
   isLoading,
   isError,
   children,
-  emptyMessage,
+  emptyMessage = "No habits to display",
   onRetry,
-  loadingLabel,
-  errorMessage,
+  loadingLabel = "Loading habits",
 }: HabitStateHandlerProps) => {
   return (
     <StateHandler<Habit>
@@ -29,8 +27,7 @@ const HabitStateHandler = ({
       isError={isError}
       data={habits}
       emptyMessage={emptyMessage}
-      errorMessage={errorMessage ? errorMessage : "Failed to load habits. Try again later."}
-      centered
+      errorMessage="Failed to load habits. Please try again."
       loadingLabel={loadingLabel}
       onRetry={onRetry}
     >

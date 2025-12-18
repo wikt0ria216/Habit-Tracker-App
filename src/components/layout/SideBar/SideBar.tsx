@@ -18,6 +18,8 @@ import UserInfoSkeleton from "@/features/user/components/UserInfoSkeleton/UserIn
 import { useGetUser } from "@/features/user/hooks/useGetUser";
 import { useEscapeKey } from "@/hooks/useEscapeKey";
 import { useMountTransition } from "@/hooks/useMountTransition";
+import StateHandler from "@/components/ui/StateHandler/StateHandler";
+import { User } from "@/types/User";
 
 const SideBar = () => {
   const { data: userData, isError, isLoading, refetch } = useGetUser();
@@ -116,18 +118,20 @@ const SideBar = () => {
           <Separator />
 
           <div className="sidebar-user-container">
-            {isLoading ? (
-              <UserInfoSkeleton />
-            ) : isError ? (
-              <UserInfoError onRetry={refetch} />
-            ) : (
+            <StateHandler<User>
+              isLoading={isLoading}
+              isError={isError}
+              customError={<UserInfoError onRetry={refetch} />}
+              customSkeleton={<UserInfoSkeleton />}
+              data={userData}
+            >
               <UserInfo
                 avatarUrl={userData?.avatar_url}
                 firstName={userData?.first_name}
                 lastName={userData?.last_name}
                 email={userData?.email}
               />
-            )}
+            </StateHandler>
           </div>
         </nav>
       )}

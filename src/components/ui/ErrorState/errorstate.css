@@ -1,0 +1,15 @@
+.error-state {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--spacing-lrg);
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.error-state-message {
+  font-size: var(--text-med);
+  color: var(--text-danger);
+}

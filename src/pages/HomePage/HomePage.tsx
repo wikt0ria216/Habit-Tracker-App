@@ -79,57 +79,51 @@ const HomePage = () => {
             />
           }
         >
-          <div className="todays-habits-list">
-            <HabitStateHandler
-              isLoading={habitsIsLoading}
-              isError={habitsIsError}
-              habits={notCompletedHabits}
-              emptyMessage={
-                activeTab === "All"
-                  ? "No habits scheduled for today."
-                  : `No habits assigned to "${activeTab}" for today.`
-              }
-              loadingLabel="Loading the list of habits uncompleted today."
-              onRetry={refetchHabits}
-            >
-              <HabitList habits={notCompletedHabits} onEdit={openEditHabitModal} onDelete={openDeleteHabitModal} />
-            </HabitStateHandler>
-          </div>
+          <HabitStateHandler
+            isLoading={habitsIsLoading}
+            isError={habitsIsError}
+            habits={notCompletedHabits}
+            emptyMessage={
+              activeTab === "All"
+                ? "No habits scheduled for today."
+                : `No habits scheduled for today in "${activeTab}".`
+            }
+            loadingLabel="Loading today's habits"
+            onRetry={refetchHabits}
+          >
+            <HabitList habits={notCompletedHabits} onEdit={openEditHabitModal} onDelete={openDeleteHabitModal} />
+          </HabitStateHandler>
         </Card>
         <Card title="Completed Habits" className="completed-todays-habits">
-          <div className="completed-todays-habits-list">
-            <HabitStateHandler
-              habits={completedHabits}
-              isLoading={habitsIsLoading}
-              isError={habitsIsError}
-              emptyMessage={
-                activeTab === "All"
-                  ? "You haven't completed any habits today yet."
-                  : `No completed habits in "${activeTab}" for today.`
-              }
-              loadingLabel="Loading the list of habits completed today"
-              onRetry={refetchHabits}
-            >
-              <HabitList habits={completedHabits} onEdit={openEditHabitModal} onDelete={openDeleteHabitModal} />
-            </HabitStateHandler>
-          </div>
+          <HabitStateHandler
+            habits={completedHabits}
+            isLoading={habitsIsLoading}
+            isError={habitsIsError}
+            emptyMessage={
+              activeTab === "All"
+                ? "No completed habits yet today."
+                : `No completed habits yet today in "${activeTab}".`
+            }
+            loadingLabel="Loading completed habits"
+            onRetry={refetchHabits}
+          >
+            <HabitList habits={completedHabits} onEdit={openEditHabitModal} onDelete={openDeleteHabitModal} />
+          </HabitStateHandler>
         </Card>
         <Card title="Todays Progress" className="stat">
           <ProgressBar percentage={progress} size={250} thickness={8} ariaLabel="Daily habits completion" />
         </Card>
         <Card title="Tomorrow Habits" className="upcoming-habits">
-          <div className="upcoming-habits-list">
-            <HabitStateHandler
-              habits={tomorrowHabits}
-              isLoading={habitsIsLoading}
-              isError={habitsIsError}
-              emptyMessage="No habits for tomorrow"
-              loadingLabel="Loading tomorrow's list of habits"
-              onRetry={refetchHabits}
-            >
-              <HabitList habits={tomorrowHabits} isReadOnly />
-            </HabitStateHandler>
-          </div>
+          <HabitStateHandler
+            habits={tomorrowHabits}
+            isLoading={habitsIsLoading}
+            isError={habitsIsError}
+            emptyMessage="No habits scheduled for tomorrow."
+            loadingLabel="Loading tomorrow's habits"
+            onRetry={refetchHabits}
+          >
+            <HabitList habits={tomorrowHabits} isReadOnly />
+          </HabitStateHandler>
         </Card>
       </div>
       <HabitModalsManager
