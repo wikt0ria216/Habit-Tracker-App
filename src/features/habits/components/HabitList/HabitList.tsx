@@ -2,7 +2,7 @@ import HabitItem from "@features/habits/components/HabitItem/HabitItem";
 
 import { Habit } from "@/types/Habit";
 
-import "./HabitList.css";
+import "./habitlist.css";
 interface HabitListProps {
   habits: Habit[] | undefined;
   isReadOnly?: boolean;
