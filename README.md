@@ -1,50 +1,39 @@
-# React + TypeScript + Vite
+# Habit Tracker App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern habit tracking application that helps you build better routines with flexible scheduling, visual progress tracking, and customizable organization.
+## Demo
 
-Currently, two official plugins are available:
+**Live Demo:** https://habit-tracker-app-blond.vercel.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+## 🎯 What It Does
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Track your daily, weekly, and monthly habits with a clean, intuitive interface. Organize habits into custom areas and monitor your progress in real-time.
+## ✨ Features
 
-- Configure the top-level `parserOptions` property like this:
+### Habit Management
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **Create, Edit, and Delete Habits** - Full CRUD operations for managing your daily routines
+- **Flexible Recurrence Patterns:**
+  - **Daily** - Habits that repeat every day
+  - **Weekly** - Select specific days of the week (e.g., Monday, Wednesday, Friday)
+  - **Monthly** - Choose specific days of the month (e.g., 1st, 15th, 30th)
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- **Habit Organization** - Assign habits to different life areas (Work, School, Health, etc.)
+- **Filter by Areas** - View habits from specific categories on the main page
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### Progress Tracking
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- **Daily Progress Bar** - Visual indicator showing completion percentage of today's habits
+
+- **Habit Status Overview:**
+
+  - Today's completed habits
+  - Today's pending habits
+  - Tomorrow's scheduled habits
+
+### Customization
+
+- **Areas Management** - Create, edit, and delete custom areas to organize your habits
+- **Theme Toggle** - Switch between light and dark modes for comfortable viewing
+- **Profile Customization** - Edit your avatar and display name
