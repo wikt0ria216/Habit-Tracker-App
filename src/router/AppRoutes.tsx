@@ -8,7 +8,6 @@ import MainLayout from "@layout/MainLayout/MainLayout";
 import ProtectedRoute from "./ProtectedRoute";
 import SignupPage from "@/pages/SignupPage/SignupPage";
 import ErrorPage from "@/pages/ErrorPage/ErrorPage";
-import TestPage from "@/pages/PageTest/TestPage";
 import ProfilePage from "@/pages/ProfilePage/ProfilePage";
 
 const AppRoutes = () => {
@@ -28,7 +27,6 @@ const AppRoutes = () => {
         <Route index element={<HomePage />} />
         <Route path="areas" element={<AreasPage />} />
         <Route path="habits" element={<HabitsPage />} />
-        <Route path="test" element={<TestPage />} />
         <Route path="profile" element={<ProfilePage />} />
       </Route>
       <Route path="*" element={<ErrorPage />} />
