@@ -1,13 +1,8 @@
 :root {
   /* Backgrounds */
+
   --bg-primary: var(--c-neutral-50);
-
-  /* smaller elements that appear on top of the main content of a website - tooltips, dropdowns */
-
   --bg-popover: var(--c-neutral-0);
-
-  /* bigger elements that appoear on top of the main content of a website - dialogs, lightbox */
-
   --bg-overlay: var(--c-neutral-0);
   --bg-overlay-backdrop: var(--c-neutral-100a);
   --bg-secondary: var(--c-neutral-0);
@@ -21,7 +16,7 @@
   --bg-scrollbar-track: var(--c-neutral-350);
   --bg-scrollbar-thumb: var(--c-neutral-600);
 
-  /* Buttons Back Grounds */
+  /* Buttons BackGrounds */
 
   --btn-accent: var(--c-accent-600);
   --btn-accent-hover: var(--c-accent-500);

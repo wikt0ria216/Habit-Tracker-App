@@ -18,7 +18,6 @@ interface HabitUpdateData {
 }
 
 export const editHabit = async (userId: string, habitId: number, data: EditHabitProps): Promise<boolean> => {
-  //fetch current habit data
   const { data: currentHabit, error: fetchCurrentError } = await supabase
     .from("habits")
     .select("habit_name, frequency, days, habit_areas(area_id)")
@@ -26,12 +25,10 @@ export const editHabit = async (userId: string, habitId: number, data: EditHabit
     .eq("user_id", userId)
     .single();
 
-  //throw error if fetching habit fails
   if (fetchCurrentError) {
     throw fetchCurrentError;
   }
 
-  //check if any data has changed
   const habitChanged =
     (data.habitName !== undefined && currentHabit.habit_name !== data.habitName) ||
     (data.frequency !== undefined && currentHabit.frequency !== data.frequency) ||
