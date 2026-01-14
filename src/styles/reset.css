@@ -6,7 +6,6 @@
   padding: 0;
 }
 
-/* Prevents font size inflation  - stops the browser from making the font automatically bigger on mobile devices */
 html {
   text-size-adjust: none;
 }
@@ -38,17 +37,3 @@ button {
   border: none;
   background: none;
 }
-
-/* :focus {
-  outline: none; 
-}
-
-:focus-visible {
-  outline: var(--border-thin-primary);
-  outline-offset: 1px;
-}
-
-
-:focus:not(:focus-visible) {
-  outline: none; 
-} */

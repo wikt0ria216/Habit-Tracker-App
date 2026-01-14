@@ -19,8 +19,8 @@
 }
 
 .card-body {
-  overflow: hidden; /* Prevents the content from spilling out */
+  overflow: hidden; 
   display: flex;
-  flex: 1; /* Takes up all free space */
+  flex: 1; 
   flex-direction: column;
 }
